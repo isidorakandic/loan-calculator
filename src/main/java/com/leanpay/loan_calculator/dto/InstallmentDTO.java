@@ -1,5 +1,6 @@
-package com.leanpay.loan_calculator;
+package com.leanpay.loan_calculator.dto;
 
+import com.leanpay.loan_calculator.entity.LoanRequest;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.DecimalMin;
@@ -9,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public class InstallmentDto {
+public class InstallmentDTO {
 
     private Long id;
 

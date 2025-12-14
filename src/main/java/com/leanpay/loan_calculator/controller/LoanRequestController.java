@@ -1,5 +1,7 @@
-package com.leanpay.loan_calculator;
+package com.leanpay.loan_calculator.controller;
 
+import com.leanpay.loan_calculator.entity.LoanRequest;
+import com.leanpay.loan_calculator.repository.LoanRequestRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,15 @@ class LoanRequestController {
 
     @Autowired
     LoanRequestRepository loanRequestRepository;
+
+    @PostMapping
+//    public ResponseEntity<LoanResponseDTO> createLoan(
+//            @Valid @RequestBody CreateLoanRequestDTO dto
+//    ) {
+//        LoanRequest entity = mapper.toEntity(dto);
+//        LoanRequest saved = loanService.createLoan(entity);
+//        return ResponseEntity.ok(mapper.toResponseDTO(saved));
+//    }
 
     @GetMapping("/requests")
     public List<LoanRequest> getAllLoanRequests() {

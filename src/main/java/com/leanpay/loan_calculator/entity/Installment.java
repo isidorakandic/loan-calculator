@@ -1,4 +1,4 @@
-package com.leanpay.loan_calculator;
+package com.leanpay.loan_calculator.entity;
 
 import jakarta.persistence.*;
 
