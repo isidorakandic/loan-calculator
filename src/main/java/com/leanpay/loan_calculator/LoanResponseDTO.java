@@ -1,16 +1,11 @@
 package com.leanpay.loan_calculator;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-public class LoanRequest {
+public class LoanResponseDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private BigDecimal loanAmount;
@@ -19,7 +14,6 @@ public class LoanRequest {
 
     private int loanTerm;
 
-    @OneToMany(mappedBy = "loanRequest", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Installment> installments = new ArrayList<>();
 
     public Long getId() {
@@ -62,5 +56,13 @@ public class LoanRequest {
                 ", interestRate = " + interestRate +
                 ", loanTerm = " + loanTerm +
                 " }";
+    }
+
+    public List<Installment> getInstallments() {
+        return installments;
+    }
+
+    public void setInstallments(List<Installment> installments) {
+        this.installments = installments;
     }
 }
