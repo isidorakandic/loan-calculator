@@ -3,7 +3,7 @@ package com.leanpay.loan_calculator.service;
 import com.leanpay.loan_calculator.entity.Installment;
 import com.leanpay.loan_calculator.entity.LoanRequest;
 import com.leanpay.loan_calculator.repository.LoanRequestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor // need for dependency injection for loanRequestRepository
 public class LoanService {
 
     private static final RoundingMode ROUNDING = RoundingMode.HALF_EVEN; // banker's rounding
     private static final MathContext MC = new MathContext(20, ROUNDING);
 
-    @Autowired
-    LoanRequestRepository loanRequestRepository;
+    private final LoanRequestRepository loanRequestRepository;
+
+    public List<LoanRequest> getAllLoans() {
+        return loanRequestRepository.findAll();
+    }
 
     @Transactional
     public LoanRequest createLoan(LoanRequest createLoanRequest) {
@@ -29,7 +33,6 @@ public class LoanService {
 
         installments.forEach(installment -> installment.setLoanRequest(createLoanRequest));
         createLoanRequest.setInstallments(installments);
-
         return loanRequestRepository.save(createLoanRequest);
     }
 
@@ -43,12 +46,11 @@ public class LoanService {
 
         ArrayList<Installment> installments = new ArrayList<>();
         BigDecimal remainingBalance = principal;
-        for (int i = 0; i < term; i++) {
-            // check logic for the last month, and for 0 interest.
-            BigDecimal interestPaid = remainingBalance.multiply(monthlyInterest, MC); // interest paid this month
+        for (int month = 1; month <= term; month++) {
+            BigDecimal interestPaid = remainingBalance.multiply(monthlyInterest, MC);
             BigDecimal principalPaid = monthlyPayment.subtract(interestPaid, MC);
             remainingBalance = remainingBalance.subtract(principalPaid, MC);
-            Installment installment = new Installment(i + 1, monthlyPayment, principalPaid, interestPaid, remainingBalance);
+            Installment installment = new Installment(month, monthlyPayment, principalPaid, interestPaid, remainingBalance);
             installments.add(installment);
         }
         return installments;

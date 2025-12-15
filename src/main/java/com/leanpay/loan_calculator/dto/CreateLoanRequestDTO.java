@@ -17,7 +17,7 @@ public class CreateLoanRequestDTO {
     @NotNull
     @DecimalMin(value = "1.0", message = "Loan amount must be at least 1")
     @Digits(integer = 12, fraction = 2)
-    @Schema(description = "Total loan amount in EUR", example = "18000")
+    @Schema(description = "Total amount of the loan", example = "18000")
     private BigDecimal loanAmount;
 
     @NotNull

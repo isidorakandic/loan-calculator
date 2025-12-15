@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @NoArgsConstructor // for MapStruct (Installment -> InstallmentDTO)
 @Setter  // for MapStruct
 @Getter // for Jackson (InstallmentDTO -> JSON)
@@ -13,12 +15,12 @@ public class InstallmentDTO {
 
     private int month;
 
-    private float paymentAmount;
+    private BigDecimal paymentAmount;
 
-    private float principalAmount;
+    private BigDecimal principalAmount;
 
-    private float interestAmount;
+    private BigDecimal interestAmount;
 
-    private float balanceOwed;
+    private BigDecimal balanceOwed;
 
 }
