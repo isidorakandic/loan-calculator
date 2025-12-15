@@ -19,12 +19,7 @@ public class LoanService {
 
     private static final RoundingMode ROUNDING = RoundingMode.HALF_EVEN; // banker's rounding
     private static final MathContext MC = new MathContext(20, ROUNDING);
-
     private final LoanRequestRepository loanRequestRepository;
-
-    public List<LoanRequest> getAllLoans() {
-        return loanRequestRepository.findAll();
-    }
 
     @Transactional
     public LoanRequest createLoan(LoanRequest createLoanRequest) {
@@ -56,18 +51,21 @@ public class LoanService {
         return installments;
     }
 
+    // Formula used for calculating monthly payment amount: P x i(1 + i)**n / (1 + i)**n - 1
+    private BigDecimal calculateMonthlyPayment(BigDecimal principal, BigDecimal monthlyInterest, int term) {
+        if (monthlyInterest.compareTo(BigDecimal.ZERO) == 0) {
+            return principal.divide(BigDecimal.valueOf(term), MC);
+        }
+        BigDecimal one = BigDecimal.ONE;
+        BigDecimal powered = one.add(monthlyInterest, MC).pow(term, MC);
+        BigDecimal dividend = powered.multiply(monthlyInterest, MC).multiply(principal, MC);
+        BigDecimal devisor = powered.subtract(one, MC);
+        return dividend.divide(devisor, MC);
+    }
+
     private BigDecimal calculateMonthlyInterest(BigDecimal interestRate) {
         BigDecimal hundred = BigDecimal.valueOf(100);
         BigDecimal twelve = BigDecimal.valueOf(12);
         return interestRate.divide(hundred, MC).divide(twelve, MC);
-    }
-
-    private BigDecimal calculateMonthlyPayment(BigDecimal principal, BigDecimal monthlyInterest, int term) {
-        BigDecimal one = BigDecimal.ONE;
-        // P x i(1 + i)n / (1 + i)n - 1
-        BigDecimal powered = one.add(monthlyInterest, MC).pow(term, MC); // (1 + i)n
-        BigDecimal dividend = powered.multiply(monthlyInterest, MC).multiply(principal, MC);
-        BigDecimal devisor = powered.subtract(one, MC);
-        return dividend.divide(devisor, MC);
     }
 }
