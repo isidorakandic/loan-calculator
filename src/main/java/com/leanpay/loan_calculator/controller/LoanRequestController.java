@@ -17,11 +17,11 @@ class LoanRequestController {
 
     private final LoanService loanService;
     private final LoanRequestMapper loanRequestMapper;
-    
+
     @PostMapping("/loans")
     public LoanResponseDTO createLoan(@Valid @RequestBody CreateLoanRequestDTO createLoanRequestDTO) {
         LoanRequest newRequest = loanRequestMapper.toEntity(createLoanRequestDTO);
-        LoanRequest loanWithInstallments = loanService.createLoan(newRequest); // error handling?
+        LoanRequest loanWithInstallments = loanService.createLoan(newRequest);
         return loanRequestMapper.toResponseDTO(loanWithInstallments);
     }
 

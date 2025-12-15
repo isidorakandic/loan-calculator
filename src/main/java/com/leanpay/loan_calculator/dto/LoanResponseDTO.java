@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,11 @@ import java.util.List;
 @Getter // for Jackson (LoanResponseDTO -> JSON)
 public class LoanResponseDTO {
 
-    private Long id;
+    private BigDecimal loanAmount;
 
-    private float loanAmount;
+    private BigDecimal interestRate;
 
-    private float interestRate;
-
-    private int loanTerm;
+    private BigDecimal loanTerm;
 
     private List<InstallmentDTO> installments = new ArrayList<>();
 

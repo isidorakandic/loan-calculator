@@ -11,8 +11,6 @@ import java.math.BigDecimal;
 @Getter // for Jackson (InstallmentDTO -> JSON)
 public class InstallmentDTO {
 
-    private Long id;
-
     private int month;
 
     private BigDecimal paymentAmount;
