@@ -16,7 +16,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface LoanRequestMapper {
-    
+
     LoanRequest toEntity(CreateLoanRequestDTO createLoanRequestDTO);
 
     LoanResponseDTO toResponseDTO(LoanRequest loanRequest);
@@ -37,7 +37,7 @@ public interface LoanRequestMapper {
         dto.setPaymentAmount(roundToTwoDecimals(dto.getPaymentAmount()));
     }
 
-    default BigDecimal roundToTwoDecimals(BigDecimal value) {
+    private BigDecimal roundToTwoDecimals(BigDecimal value) {
         if (value == null) return null;
         return value.setScale(2, RoundingMode.HALF_UP);
     }
