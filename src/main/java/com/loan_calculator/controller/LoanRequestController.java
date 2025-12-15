@@ -1,10 +1,10 @@
-package com.leanpay.loan_calculator.controller;
+package com.loan_calculator.controller;
 
-import com.leanpay.loan_calculator.dto.CreateLoanRequestDTO;
-import com.leanpay.loan_calculator.dto.LoanResponseDTO;
-import com.leanpay.loan_calculator.entity.LoanRequest;
-import com.leanpay.loan_calculator.mappers.LoanRequestMapper;
-import com.leanpay.loan_calculator.service.LoanService;
+import com.loan_calculator.dto.CreateLoanRequestDTO;
+import com.loan_calculator.dto.LoanResponseDTO;
+import com.loan_calculator.entity.LoanRequest;
+import com.loan_calculator.mappers.LoanRequestMapper;
+import com.loan_calculator.service.LoanService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

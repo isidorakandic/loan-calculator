@@ -1,8 +1,8 @@
-package com.leanpay.loan_calculator.service;
+package com.loan_calculator.service;
 
-import com.leanpay.loan_calculator.entity.Installment;
-import com.leanpay.loan_calculator.entity.LoanRequest;
-import com.leanpay.loan_calculator.repository.LoanRequestRepository;
+import com.loan_calculator.entity.Installment;
+import com.loan_calculator.entity.LoanRequest;
+import com.loan_calculator.repository.LoanRequestRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class LoanService {
 
         installments.forEach(installment -> installment.setLoanRequest(createLoanRequest));
         createLoanRequest.setInstallments(installments);
-        
+
         return loanRequestRepository.save(createLoanRequest);
     }
 

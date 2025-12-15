@@ -1,4 +1,4 @@
-package com.leanpay.loan_calculator.exception;
+package com.loan_calculator.exception;
 
 import java.util.List;
 

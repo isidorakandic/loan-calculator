@@ -1,10 +1,10 @@
-package com.leanpay.loan_calculator.mappers;
+package com.loan_calculator.mappers;
 
-import com.leanpay.loan_calculator.dto.CreateLoanRequestDTO;
-import com.leanpay.loan_calculator.dto.InstallmentDTO;
-import com.leanpay.loan_calculator.dto.LoanResponseDTO;
-import com.leanpay.loan_calculator.entity.Installment;
-import com.leanpay.loan_calculator.entity.LoanRequest;
+import com.loan_calculator.dto.CreateLoanRequestDTO;
+import com.loan_calculator.dto.InstallmentDTO;
+import com.loan_calculator.dto.LoanResponseDTO;
+import com.loan_calculator.entity.Installment;
+import com.loan_calculator.entity.LoanRequest;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;

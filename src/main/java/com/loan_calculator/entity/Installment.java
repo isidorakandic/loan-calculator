@@ -1,4 +1,4 @@
-package com.leanpay.loan_calculator.entity;
+package com.loan_calculator.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

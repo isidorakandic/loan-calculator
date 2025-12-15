@@ -1,4 +1,4 @@
-package com.leanpay.loan_calculator.dto;
+package com.loan_calculator.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
