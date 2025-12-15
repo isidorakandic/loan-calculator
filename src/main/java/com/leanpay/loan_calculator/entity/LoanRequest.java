@@ -1,66 +1,35 @@
 package com.leanpay.loan_calculator.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor // JPA requirement
+@Getter // for MapStruct (LoanRequest -> LoanResponseDTO)
 public class LoanRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter // for MapStruct (CreateLoanRequestDTO -> LoanRequest)
     private BigDecimal loanAmount;
 
+    @Setter
     private BigDecimal interestRate;
 
-    private int loanTerm;
+    @Setter
+    private Integer loanTerm;
 
     @OneToMany(mappedBy = "loanRequest", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter // for setting calculated installments in LoanService
     private List<Installment> installments = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
 
-    public BigDecimal getLoanAmount() {
-        return loanAmount;
-    }
-
-    public BigDecimal getInterestRate() {
-        return interestRate;
-    }
-
-    public int getLoanTerm() {
-        return loanTerm;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setLoanAmount(BigDecimal loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public void setInterestRate(BigDecimal interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public void setLoanTerm(int loanTerm) {
-        this.loanTerm = loanTerm;
-    }
-
-    @Override
-    public String toString() {
-        return "LoanRequest { " +
-                "id = " + id +
-                ", loanAmount = " + loanAmount +
-                ", interestRate = " + interestRate +
-                ", loanTerm = " + loanTerm +
-                " }";
-    }
 }

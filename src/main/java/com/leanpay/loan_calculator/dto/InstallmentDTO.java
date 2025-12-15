@@ -1,52 +1,24 @@
 package com.leanpay.loan_calculator.dto;
 
-import com.leanpay.loan_calculator.entity.LoanRequest;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.math.BigDecimal;
-
+@NoArgsConstructor // for MapStruct (Installment -> InstallmentDTO)
+@Setter  // for MapStruct
+@Getter // for Jackson (InstallmentDTO -> JSON)
 public class InstallmentDTO {
 
     private Long id;
 
-    @NotNull
-    @Min(value = 1, message = "The month of the installment must be at least 1")
     private int month;
 
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = false, message = "Payment amount must be greater than 0")
-    @Digits(integer = 12, fraction = 2)
-    private BigDecimal paymentAmount;
+    private float paymentAmount;
 
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = false, message = "Principal amount must be greater than 0")
-    @Digits(integer = 12, fraction = 2)
-    private BigDecimal principalAmount;
+    private float principalAmount;
 
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = true, message = "Interest amount must be 0 or bigger")
-    @Digits(integer = 12, fraction = 2)
-    private BigDecimal interestAmount;
+    private float interestAmount;
 
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = false, message = "Balance owed must be greater than 0")
-    @Digits(integer = 12, fraction = 2)
-    private BigDecimal balanceOwed;
+    private float balanceOwed;
 
-    @ManyToOne
-    @JoinColumn(name = "loan_request_id")
-    private LoanRequest loanRequest;
-
-    public LoanRequest getLoanRequest() {
-        return loanRequest;
-    }
-
-    public void setLoanRequest(LoanRequest loanRequest) {
-        this.loanRequest = loanRequest;
-    }
 }
