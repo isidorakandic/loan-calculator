@@ -1,6 +1,7 @@
 package com.loan_calculator.entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor // JPA requirement
 @Getter // for MapStruct (LoanRequest -> LoanResponseDTO)
+@EqualsAndHashCode // for unit testing
 public class LoanRequest {
 
     @Id

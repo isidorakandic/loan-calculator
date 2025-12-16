@@ -1,6 +1,7 @@
 package com.loan_calculator.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,13 +14,14 @@ import java.util.List;
 @NoArgsConstructor // for MapStruct (LoanRequest -> LoanResponseDTO)
 @Setter
 @Getter // for Jackson (LoanResponseDTO -> JSON)
+@EqualsAndHashCode // for unit testing
 public class LoanResponseDTO {
 
     private BigDecimal loanAmount;
 
     private BigDecimal interestRate;
 
-    private BigDecimal loanTerm;
+    private int loanTerm;
 
     private List<InstallmentDTO> installments = new ArrayList<>();
 

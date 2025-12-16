@@ -7,12 +7,15 @@ import com.loan_calculator.entity.Installment;
 import com.loan_calculator.entity.LoanRequest;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface LoanRequestMapper {
 
+    @Mapping(target = "installments", ignore = true)
+    @Mapping(target = "creationTimestamp", ignore = true)
     LoanRequest toEntity(CreateLoanRequestDTO createLoanRequestDTO);
 
     LoanResponseDTO toResponseDTO(LoanRequest loanRequest);
@@ -24,5 +27,5 @@ public interface LoanRequestMapper {
 
     @IterableMapping(elementTargetType = LoanResponseDTO.class)
     List<LoanResponseDTO> toLoanResponseDTOs(List<LoanRequest> loanRequests);
-    
+
 }

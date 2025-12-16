@@ -1,0 +1,84 @@
+package com.loan_calculator.service;
+
+import com.loan_calculator.dto.CreateLoanRequestDTO;
+import com.loan_calculator.dto.LoanResponseDTO;
+import com.loan_calculator.entity.Installment;
+import com.loan_calculator.entity.LoanRequest;
+import com.loan_calculator.mappers.LoanRequestMapper;
+import com.loan_calculator.repository.LoanRequestRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class LoanServiceMappingTest {
+
+    @Mock
+    private LoanRequestRepository loanRequestRepository;
+
+    @Mock
+    private LoanRequestMapper loanRequestMapper;
+
+    @Spy
+    @InjectMocks
+    private LoanService loanService;
+
+    CreateLoanRequestDTO requestDTO;
+    LoanRequest loanRequest;
+    LoanResponseDTO responseDTO;
+    List<Installment> installments;
+
+    @BeforeEach
+    void setUp() {
+        requestDTO = new CreateLoanRequestDTO();
+        loanRequest = new LoanRequest();
+        responseDTO = new LoanResponseDTO();
+
+        Installment installment1 = new Installment();
+        Installment installment2 = new Installment();
+        installments = List.of(installment1, installment2);
+
+        when(loanRequestMapper.toEntity(requestDTO)).thenReturn(loanRequest);
+        doReturn(installments).when(loanService).calculateInstallments(loanRequest);
+
+        // We need this because loan request being saved contains installments (so it's not the same as loanRequest)
+        when(loanRequestRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(loanRequestMapper.toResponseDTO(loanRequest)).thenReturn(responseDTO);
+    }
+
+    @Test
+    void createLoan_shouldCallAllCollaboratorsAndReturnResponse() {
+        LoanResponseDTO result = loanService.createLoan(requestDTO);
+
+        assertThat(result).isSameAs(responseDTO);
+        verify(loanRequestMapper).toEntity(requestDTO);
+        verify(loanService).calculateInstallments(loanRequest);
+        verify(loanRequestRepository).save(loanRequest);
+        verify(loanRequestMapper).toResponseDTO(loanRequest);
+
+    }
+
+    @Test
+    void createLoan_shouldAttachLoanRequestToInstallments_beforeSaving() {
+        loanService.createLoan(requestDTO);
+
+        ArgumentCaptor<LoanRequest> captor = ArgumentCaptor.forClass(LoanRequest.class);
+        verify(loanRequestRepository).save(captor.capture());
+        LoanRequest savedLoanRequest = captor.getValue();
+
+        assertThat(savedLoanRequest.getInstallments())
+                .allSatisfy(i -> assertSame(savedLoanRequest, i.getLoanRequest()));
+    }
+
+}

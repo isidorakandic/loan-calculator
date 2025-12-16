@@ -9,12 +9,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LoanServiceInstallmentsTest {
+class LoanServiceLogicTest {
 
     private final LoanService loanService = new LoanService(null, null);
 
     @Test
-    void zeroInterestRate() {
+    void calculateInstallments_zeroInterestRate() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("1200"));
         loanRequest.setInterestRate(BigDecimal.ZERO);
@@ -31,7 +31,7 @@ class LoanServiceInstallmentsTest {
     }
 
     @Test
-    void singleMonthLoan() {
+    void calculateInstallments_singleMonthLoan() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("500"));
         loanRequest.setInterestRate(new BigDecimal("12"));
@@ -47,7 +47,7 @@ class LoanServiceInstallmentsTest {
     }
 
     @Test
-    void lastPaymentAdjusted() {
+    void calculateInstallments_lastPaymentAdjusted() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("10000")); // principal amount
         loanRequest.setInterestRate(new BigDecimal("7"));   // annual interest rate
@@ -74,7 +74,7 @@ class LoanServiceInstallmentsTest {
     }
 
     @Test
-    void longTermLoan() {
+    void calculateInstallments_longTermLoan() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("99000000"));
         loanRequest.setInterestRate(new BigDecimal("35.8"));
@@ -100,7 +100,7 @@ class LoanServiceInstallmentsTest {
 
 
     @Test
-    void bigLoanAmount() {
+    void calculateInstallments_bigLoanAmount() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("900000000"));
         loanRequest.setInterestRate(new BigDecimal("35.8"));
@@ -119,7 +119,7 @@ class LoanServiceInstallmentsTest {
     }
 
     @Test
-    void tinyLoanAmount() {
+    void calculateInstallments_tinyLoanAmount() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("1"));
         loanRequest.setInterestRate(new BigDecimal("0.01"));
