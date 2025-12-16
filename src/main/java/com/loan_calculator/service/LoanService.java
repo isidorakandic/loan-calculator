@@ -32,25 +32,38 @@ public class LoanService {
         return loanRequestRepository.save(createLoanRequest);
     }
 
+    private static final int MONEY_SCALE = 2;
+
     private List<Installment> calculateInstallments(LoanRequest loanRequest) {
         BigDecimal principal = loanRequest.getLoanAmount();
         BigDecimal interestRate = loanRequest.getInterestRate();
         int term = loanRequest.getLoanTerm();
 
         BigDecimal monthlyInterest = calculateMonthlyInterest(interestRate);
-        BigDecimal monthlyPayment = calculateMonthlyPayment(principal, monthlyInterest, term);
+        BigDecimal theoreticalMonthlyPayment = calculateMonthlyPayment(principal, monthlyInterest, term);
 
         ArrayList<Installment> installments = new ArrayList<>();
         BigDecimal remainingBalance = principal;
+        
         for (int month = 1; month <= term; month++) {
-            BigDecimal interestPaid = remainingBalance.multiply(monthlyInterest, MC);
-            BigDecimal principalPaid = monthlyPayment.subtract(interestPaid, MC);
-            remainingBalance = remainingBalance.subtract(principalPaid, MC);
-            Installment installment = new Installment(month, monthlyPayment, principalPaid, interestPaid, remainingBalance);
-            installments.add(installment);
+            BigDecimal theoreticalInterest = remainingBalance.multiply(monthlyInterest, MC);
+            BigDecimal roundedInterest = theoreticalInterest.setScale(MONEY_SCALE, ROUNDING);
+            BigDecimal roundedPrincipal;
+            if (month < term) {
+                BigDecimal theoreticalPrincipal = theoreticalMonthlyPayment.subtract(theoreticalInterest, MC);
+                roundedPrincipal = theoreticalPrincipal.setScale(MONEY_SCALE, ROUNDING);
+                remainingBalance = remainingBalance.subtract(roundedPrincipal, MC);
+            } else {
+                roundedPrincipal = remainingBalance.setScale(MONEY_SCALE, ROUNDING);
+                remainingBalance = BigDecimal.ZERO;
+            }
+            BigDecimal payment = roundedPrincipal.add(roundedInterest);
+            installments.add(new Installment(month, payment, roundedPrincipal, roundedInterest, remainingBalance));
         }
+
         return installments;
     }
+
 
     // Formula used for calculating monthly payment amount: P x i(1 + i)**n / (1 + i)**n - 1
     private BigDecimal calculateMonthlyPayment(BigDecimal principal, BigDecimal monthlyInterest, int term) {
