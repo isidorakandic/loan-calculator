@@ -15,10 +15,10 @@ This project is a Spring Boot-based loan calculator that keeps controllers thin,
 - **Observability and openness:** Actuator endpoints support basic health and metrics exposure. Springdoc/OpenAPI generates HTTP contracts for consumers.
 - **Extensibility:** The repository abstraction allows switching between in-memory, JDBC, or JPA-backed implementations without changing controllers.
 
-## Diagrams (XMI)
-- **Class diagram:** `docs/diagrams/class-diagram.xmi` shows the controller-service-repository flow, domain objects (`Loan`, `LoanRequest`, `LoanSchedule`), and their primary operations and relationships.
-- **Sequence diagram:** `docs/diagrams/sequence-diagram.xmi` traces the synchronous request cycle from client to controller, through service and repository, and back with a calculated schedule.
-- **Browser-friendly rendering:** Each XMI file references `docs/diagrams/xmi-to-html.xsl`, so opening the XMI directly in a modern browser will render a styled HTML view instead of a raw XML tree.
+## Diagrams (XMI and image formats)
+- **Class diagram (image):** `docs/diagrams/class-diagram.svg` provides a human-readable picture of the controller-service-repository flow, domain objects (`Loan`, `LoanRequest`, `LoanSchedule`), and their primary operations and relationships.
+- **Sequence diagram (image):** `docs/diagrams/sequence-diagram.svg` illustrates the synchronous request cycle from client to controller, through service and repository, and back with a calculated schedule.
+- **XMI sources:** `docs/diagrams/class-diagram.xmi` and `docs/diagrams/sequence-diagram.xmi` remain available for tooling. Each XMI file references `docs/diagrams/xmi-to-html.xsl`, so opening the XMI directly in a modern browser will render a styled HTML view instead of a raw XML tree.
 
 ## Libraries and Tooling
 - **Spring Boot Starter Web MVC:** Exposes REST endpoints with thin controllers.
