@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xmi-to-html.xsl"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:uml="http://www.omg.org/spec/UML/20131001">
+  <uml:Interaction xmi:id="interaction_loan" name="CalculateScheduleFlow">
+    <lifeline xmi:id="lifeline_client" name="Client"/>
+    <lifeline xmi:id="lifeline_controller" name="LoanCalculatorController" represents="class_controller"/>
+    <lifeline xmi:id="lifeline_service" name="LoanCalculationService" represents="class_service"/>
+    <lifeline xmi:id="lifeline_repository" name="LoanRepository" represents="class_repository"/>
+
+    <message xmi:id="msg_request" name="POST /loans/calculate" messageSort="synchCall" sendEvent="send_client_to_controller" receiveEvent="recv_client_to_controller"/>
+    <message xmi:id="msg_service_call" name="calculateSchedule(request)" messageSort="synchCall" sendEvent="send_controller_to_service" receiveEvent="recv_controller_to_service"/>
+    <message xmi:id="msg_repo_lookup" name="save(loan)" messageSort="synchCall" sendEvent="send_service_to_repo" receiveEvent="recv_service_to_repo"/>
+    <message xmi:id="msg_repo_response" name="loan persisted" messageSort="reply" sendEvent="send_repo_to_service" receiveEvent="recv_repo_to_service"/>
+    <message xmi:id="msg_service_response" name="LoanSchedule" messageSort="reply" sendEvent="send_service_to_controller" receiveEvent="recv_service_to_controller"/>
+    <message xmi:id="msg_controller_response" name="200 OK + schedule" messageSort="reply" sendEvent="send_controller_to_client" receiveEvent="recv_controller_to_client"/>
+
+    <fragment xmi:type="uml:ExecutionSpecification" xmi:id="exec_controller" start="recv_client_to_controller" finish="send_controller_to_client"/>
+    <fragment xmi:type="uml:ExecutionSpecification" xmi:id="exec_service" start="recv_controller_to_service" finish="send_service_to_controller"/>
+    <fragment xmi:type="uml:ExecutionSpecification" xmi:id="exec_repo" start="recv_service_to_repo" finish="send_repo_to_service"/>
+
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="send_client_to_controller" name="Client->Controller send" covered="lifeline_client" message="msg_request"/>
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="recv_client_to_controller" name="Controller receive" covered="lifeline_controller" message="msg_request"/>
+
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="send_controller_to_service" name="Controller->Service send" covered="lifeline_controller" message="msg_service_call"/>
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="recv_controller_to_service" name="Service receive" covered="lifeline_service" message="msg_service_call"/>
+
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="send_service_to_repo" name="Service->Repository send" covered="lifeline_service" message="msg_repo_lookup"/>
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="recv_service_to_repo" name="Repository receive" covered="lifeline_repository" message="msg_repo_lookup"/>
+
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="send_repo_to_service" name="Repository->Service reply" covered="lifeline_repository" message="msg_repo_response"/>
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="recv_repo_to_service" name="Service receives persistence result" covered="lifeline_service" message="msg_repo_response"/>
+
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="send_service_to_controller" name="Service->Controller reply" covered="lifeline_service" message="msg_service_response"/>
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="recv_service_to_controller" name="Controller receives schedule" covered="lifeline_controller" message="msg_service_response"/>
+
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="send_controller_to_client" name="Controller->Client reply" covered="lifeline_controller" message="msg_controller_response"/>
+    <event xmi:type="uml:MessageOccurrenceSpecification" xmi:id="recv_controller_to_client" name="Client receives schedule" covered="lifeline_client" message="msg_controller_response"/>
+  </uml:Interaction>
+</xmi:XMI>

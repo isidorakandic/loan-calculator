@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xmi-to-html.xsl"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:uml="http://www.omg.org/spec/UML/20131001">
+  <uml:Model xmi:id="model_loan" name="LoanCalculatorModel">
+    <packagedElement xmi:type="uml:Class" xmi:id="class_controller" name="LoanCalculatorController">
+      <ownedAttribute xmi:id="controller_service" name="loanService" type="class_service" visibility="private"/>
+      <ownedOperation xmi:id="op_calculate" name="calculateSchedule" visibility="public">
+        <ownedParameter xmi:id="param_request" name="request" type="class_request" direction="in"/>
+        <ownedParameter xmi:id="param_response" name="response" type="class_schedule" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="class_service" name="LoanCalculationService">
+      <ownedAttribute xmi:id="service_repo" name="loanRepository" type="class_repository" visibility="private"/>
+      <ownedOperation xmi:id="op_calculate_service" name="calculateSchedule" visibility="public">
+        <ownedParameter xmi:id="service_request" name="request" type="class_request" direction="in"/>
+        <ownedParameter xmi:id="service_return" name="schedule" type="class_schedule" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="op_record" name="recordCalculation" visibility="public">
+        <ownedParameter xmi:id="record_loan" name="loan" type="class_loan" direction="in"/>
+        <ownedParameter xmi:id="record_return" name="persisted" type="class_loan" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="class_repository" name="LoanRepository" isAbstract="true">
+      <ownedOperation xmi:id="op_save" name="save" visibility="public">
+        <ownedParameter xmi:id="save_param" name="loan" type="class_loan" direction="in"/>
+        <ownedParameter xmi:id="save_return" name="persisted" type="class_loan" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="op_find" name="findById" visibility="public">
+        <ownedParameter xmi:id="find_param" name="loanId" type="primitive_string" direction="in"/>
+        <ownedParameter xmi:id="find_return" name="loan" type="class_loan" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="class_loan" name="Loan">
+      <ownedAttribute xmi:id="loan_id" name="id" type="primitive_string" visibility="private"/>
+      <ownedAttribute xmi:id="loan_principal" name="principal" type="primitive_decimal" visibility="private"/>
+      <ownedAttribute xmi:id="loan_rate" name="annualInterestRate" type="primitive_decimal" visibility="private"/>
+      <ownedAttribute xmi:id="loan_term" name="termMonths" type="primitive_integer" visibility="private"/>
+      <ownedAttribute xmi:id="loan_borrower" name="borrower" type="primitive_string" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="class_request" name="LoanRequest">
+      <ownedAttribute xmi:id="req_principal" name="principal" type="primitive_decimal" visibility="private"/>
+      <ownedAttribute xmi:id="req_rate" name="annualInterestRate" type="primitive_decimal" visibility="private"/>
+      <ownedAttribute xmi:id="req_term" name="termMonths" type="primitive_integer" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="class_schedule" name="LoanSchedule">
+      <ownedAttribute xmi:id="sched_payment" name="monthlyPayment" type="primitive_decimal" visibility="private"/>
+      <ownedAttribute xmi:id="sched_interest" name="totalInterest" type="primitive_decimal" visibility="private"/>
+      <ownedAttribute xmi:id="sched_entries" name="amortizationEntries" type="primitive_string" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="primitive_decimal" name="decimal"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="primitive_integer" name="integer"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="primitive_string" name="string"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="assoc_controller_service" memberEnd="controller_service service_association_end"/>
+    <ownedMember xmi:type="uml:Property" xmi:id="service_association_end" name="service" type="class_service" association="assoc_controller_service" visibility="private"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="assoc_service_repo" memberEnd="service_repo repo_association_end"/>
+    <ownedMember xmi:type="uml:Property" xmi:id="repo_association_end" name="repository" type="class_repository" association="assoc_service_repo" visibility="private"/>
+  </uml:Model>
+</xmi:XMI>
