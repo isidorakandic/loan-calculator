@@ -1,10 +1,12 @@
 package com.loan_calculator.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,5 +22,8 @@ public class LoanResponseDTO {
     private BigDecimal loanTerm;
 
     private List<InstallmentDTO> installments = new ArrayList<>();
+
+    @JsonFormat(pattern = "dd MMMM yyyy HH:mm")
+    private LocalDateTime creationTimestamp;
 
 }

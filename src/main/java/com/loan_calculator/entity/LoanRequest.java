@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,5 +33,8 @@ public class LoanRequest {
     @Setter // for setting calculated installments in LoanService
     private List<Installment> installments = new ArrayList<>();
 
+    @Setter
+    @CreationTimestamp
+    private LocalDateTime creationTimestamp;
 
 }
