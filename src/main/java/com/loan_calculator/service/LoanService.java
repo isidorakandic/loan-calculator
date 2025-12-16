@@ -40,7 +40,7 @@ public class LoanService {
         return loanRequestMapper.toResponseDTO(createLoanRequest);
     }
 
-    private List<Installment> calculateInstallments(LoanRequest loanRequest) {
+    protected List<Installment> calculateInstallments(LoanRequest loanRequest) {
         BigDecimal principal = loanRequest.getLoanAmount();
         BigDecimal interestRate = loanRequest.getInterestRate();
         int term = loanRequest.getLoanTerm();
