@@ -2,8 +2,6 @@ package com.loan_calculator.controller;
 
 import com.loan_calculator.dto.CreateLoanRequestDTO;
 import com.loan_calculator.dto.LoanResponseDTO;
-import com.loan_calculator.entity.LoanRequest;
-import com.loan_calculator.mappers.LoanRequestMapper;
 import com.loan_calculator.service.LoanService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -16,13 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 class LoanRequestController {
 
     private final LoanService loanService;
-    private final LoanRequestMapper loanRequestMapper;
 
     @PostMapping("/loans")
     public LoanResponseDTO createLoan(@Valid @RequestBody CreateLoanRequestDTO createLoanRequestDTO) {
-        LoanRequest newRequest = loanRequestMapper.toEntity(createLoanRequestDTO);
-        LoanRequest loanWithInstallments = loanService.createLoan(newRequest);
-        return loanRequestMapper.toResponseDTO(loanWithInstallments);
+        return loanService.createLoan(createLoanRequestDTO);
     }
 
 }

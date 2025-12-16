@@ -1,11 +1,13 @@
 package com.loan_calculator.service;
 
+import com.loan_calculator.dto.CreateLoanRequestDTO;
+import com.loan_calculator.dto.LoanResponseDTO;
 import com.loan_calculator.entity.Installment;
 import com.loan_calculator.entity.LoanRequest;
+import com.loan_calculator.mappers.LoanRequestMapper;
 import com.loan_calculator.repository.LoanRequestRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -21,16 +23,21 @@ public class LoanService {
     private static final MathContext MC = new MathContext(20, ROUNDING);
     private static final int MONEY_SCALE = 2;
     private final LoanRequestRepository loanRequestRepository;
+    private final LoanRequestMapper loanRequestMapper;
 
-    @Transactional
-    public LoanRequest createLoan(LoanRequest createLoanRequest) {
+    public LoanResponseDTO createLoan(CreateLoanRequestDTO createLoanRequestDTO) {
+
+        LoanRequest createLoanRequest = loanRequestMapper.toEntity(createLoanRequestDTO);
 
         List<Installment> installments = calculateInstallments(createLoanRequest);
 
-        installments.forEach(installment -> installment.setLoanRequest(createLoanRequest));
+        LoanRequest finalCreateLoanRequest = createLoanRequest;
+        installments.forEach(installment -> installment.setLoanRequest(finalCreateLoanRequest));
         createLoanRequest.setInstallments(installments);
 
-        return loanRequestRepository.save(createLoanRequest);
+        createLoanRequest = loanRequestRepository.save(createLoanRequest);
+
+        return loanRequestMapper.toResponseDTO(createLoanRequest);
     }
 
     private List<Installment> calculateInstallments(LoanRequest loanRequest) {
