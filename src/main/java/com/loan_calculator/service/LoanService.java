@@ -19,6 +19,7 @@ public class LoanService {
 
     private static final RoundingMode ROUNDING = RoundingMode.HALF_EVEN; // banker's rounding
     private static final MathContext MC = new MathContext(20, ROUNDING);
+    private static final int MONEY_SCALE = 2;
     private final LoanRequestRepository loanRequestRepository;
 
     @Transactional
@@ -32,8 +33,6 @@ public class LoanService {
         return loanRequestRepository.save(createLoanRequest);
     }
 
-    private static final int MONEY_SCALE = 2;
-
     private List<Installment> calculateInstallments(LoanRequest loanRequest) {
         BigDecimal principal = loanRequest.getLoanAmount();
         BigDecimal interestRate = loanRequest.getInterestRate();
@@ -41,16 +40,17 @@ public class LoanService {
 
         BigDecimal monthlyInterest = calculateMonthlyInterest(interestRate);
         BigDecimal theoreticalMonthlyPayment = calculateMonthlyPayment(principal, monthlyInterest, term);
+        BigDecimal fixedMonthlyPayment = theoreticalMonthlyPayment.setScale(MONEY_SCALE, ROUNDING);
 
-        ArrayList<Installment> installments = new ArrayList<>();
+        List<Installment> installments = new ArrayList<>();
         BigDecimal remainingBalance = principal;
-        
+
         for (int month = 1; month <= term; month++) {
             BigDecimal theoreticalInterest = remainingBalance.multiply(monthlyInterest, MC);
             BigDecimal roundedInterest = theoreticalInterest.setScale(MONEY_SCALE, ROUNDING);
             BigDecimal roundedPrincipal;
             if (month < term) {
-                BigDecimal theoreticalPrincipal = theoreticalMonthlyPayment.subtract(theoreticalInterest, MC);
+                BigDecimal theoreticalPrincipal = fixedMonthlyPayment.subtract(theoreticalInterest, MC);
                 roundedPrincipal = theoreticalPrincipal.setScale(MONEY_SCALE, ROUNDING);
                 remainingBalance = remainingBalance.subtract(roundedPrincipal, MC);
             } else {
