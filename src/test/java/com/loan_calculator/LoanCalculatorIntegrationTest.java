@@ -1,6 +1,7 @@
 package com.loan_calculator;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.loan_calculator.dto.CreateLoanRequestDTO;
 import com.loan_calculator.dto.InstallmentDTO;
 import com.loan_calculator.dto.LoanResponseDTO;
@@ -22,6 +23,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 // Bootstraps the full application context and runs the server on a random port for end-to-end testing.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 // Enables and configures MockMvc so HTTP requests can be performed without starting a real server.
@@ -42,9 +45,11 @@ class LoanCalculatorIntegrationTest {
         CreateLoanRequestDTO requestPayload = setupLoanRequest();
         List<InstallmentDTO> expectedInstallments = setUpInstallments();
 
+        jsonMapper.registerModule(new JavaTimeModule());
+
         // Performs the POST request to /loan with the request DTO serialized as JSON and asserts an OK status.
         MvcResult mvcResult = Assertions.assertDoesNotThrow(() -> mockMvc.perform( // Executes the request and fails the test if serialization or MVC throws.
-                        org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/loan") // Configures a POST to the /loan endpoint.
+                        org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/loans") // Configures a POST to the /loan endpoint.
                                 .contentType(MediaType.APPLICATION_JSON) // Sends JSON so the controller binds to CreateLoanRequestDTO.
                                 .content(jsonMapper.writeValueAsString(requestPayload))) // Serializes the request DTO into the HTTP body.
                 .andExpect(MockMvcResultMatchers.status().isOk()) // Asserts the endpoint responds with HTTP 200 OK.
@@ -84,8 +89,7 @@ class LoanCalculatorIntegrationTest {
         );
     }
 
-    private InstallmentDTO buildInstallment(int month, double paymentAmount, double principalAmount,
-                                            double interestAmount, double balanceOwed) {
+    private InstallmentDTO buildInstallment(int month, double paymentAmount, double principalAmount, double interestAmount, double balanceOwed) {
         InstallmentDTO installmentDTO = new InstallmentDTO();
         installmentDTO.setMonth(month);
         installmentDTO.setPaymentAmount(BigDecimal.valueOf(paymentAmount));
@@ -98,9 +102,17 @@ class LoanCalculatorIntegrationTest {
     private void assertInstallments(List<InstallmentDTO> expectedInstallments,
                                     List<InstallmentDTO> actualInstallments) {
 
-        Assertions.assertNotNull(actualInstallments, "Installments should be returned in the response");
-        Assertions.assertEquals(expectedInstallments, actualInstallments,
-                "Installments should match");
+        Assertions.assertNotNull(actualInstallments);
+        Assertions.assertEquals(expectedInstallments.size(), actualInstallments.size());
+        for (int i = 0; i < expectedInstallments.size(); i++) {
+            InstallmentDTO expectedInst = expectedInstallments.get(i);
+            InstallmentDTO actualInst = actualInstallments.get(i);
+            assertThat(actualInst.getMonth()).isEqualTo(expectedInst.getMonth());
+            assertThat(actualInst.getPaymentAmount()).isEqualByComparingTo(expectedInst.getPaymentAmount());
+            assertThat(actualInst.getPrincipalAmount()).isEqualByComparingTo(expectedInst.getPrincipalAmount());
+            assertThat(actualInst.getInterestAmount()).isEqualByComparingTo(expectedInst.getInterestAmount());
+            assertThat(actualInst.getBalanceOwed()).isEqualByComparingTo(expectedInst.getBalanceOwed());
+        }
     }
 
     private void assertCreationTimestampFormat(LocalDateTime creationTimestamp) {
