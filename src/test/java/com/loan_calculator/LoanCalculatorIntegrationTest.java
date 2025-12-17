@@ -34,7 +34,7 @@ class LoanCalculatorIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    JsonMapper objectMapper = JsonMapper.builder().build();
+    JsonMapper jsonMapper = JsonMapper.builder().build();
 
     @Test
     void postLoansPersistsAndReturnsAmortizationSchedule() throws UnsupportedEncodingException {
@@ -46,7 +46,7 @@ class LoanCalculatorIntegrationTest {
         MvcResult mvcResult = Assertions.assertDoesNotThrow(() -> mockMvc.perform( // Executes the request and fails the test if serialization or MVC throws.
                         org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/loan") // Configures a POST to the /loan endpoint.
                                 .contentType(MediaType.APPLICATION_JSON) // Sends JSON so the controller binds to CreateLoanRequestDTO.
-                                .content(objectMapper.writeValueAsString(requestPayload))) // Serializes the request DTO into the HTTP body.
+                                .content(jsonMapper.writeValueAsString(requestPayload))) // Serializes the request DTO into the HTTP body.
                 .andExpect(MockMvcResultMatchers.status().isOk()) // Asserts the endpoint responds with HTTP 200 OK.
                 .andReturn()); // Captures the full MVC result for response body inspection.
 
@@ -54,7 +54,7 @@ class LoanCalculatorIntegrationTest {
         String responseBody = mvcResult.getResponse().getContentAsString();
         // Deserializes the response into a strongly typed DTO to improve field-level validation and readability.
         LoanResponseDTO actualResponse = Assertions.assertDoesNotThrow(
-                () -> objectMapper.readValue(responseBody, LoanResponseDTO.class)
+                () -> jsonMapper.readValue(responseBody, LoanResponseDTO.class)
         );
 
         Assertions.assertEquals(BigDecimal.valueOf(10000), actualResponse.getLoanAmount());
