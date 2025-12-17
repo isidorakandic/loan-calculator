@@ -16,6 +16,7 @@ public class Installment {
     private Long id;
 
     @NonNull
+    @Column(name = "installment_month")
     private Integer month;
 
     @NonNull
