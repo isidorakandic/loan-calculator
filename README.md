@@ -13,7 +13,7 @@ retrieving their calculated monthly installments, persisting everything in MySQL
 
 ## UML class diagram
 
-![class diagram](diagrams/class-diagram.svg)
+[![class diagram](diagrams/class-diagram.svg)](diagrams/class-diagram.svg)
 
 ## Architecture
 
