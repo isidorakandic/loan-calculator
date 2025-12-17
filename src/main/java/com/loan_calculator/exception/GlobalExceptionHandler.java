@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -41,6 +42,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handlePaginationError(InvalidDataAccessApiUsageException exception) {
         String message = "Invalid pagination parameters were sent.";
+        log.warn(message, exception);
+        return new ErrorResponse(List.of(message));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNoResourceError(NoResourceFoundException exception) {
+        String message = String.format("Error %d: Requested resource does not exist.", HttpStatus.NOT_FOUND.value());
         log.warn(message, exception);
         return new ErrorResponse(List.of(message));
     }
