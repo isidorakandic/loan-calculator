@@ -7,8 +7,9 @@ import com.loan_calculator.dto.LoanResponseDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,6 +20,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 // Bootstraps the full application context and runs the server on a random port for end-to-end testing.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -32,9 +36,14 @@ class LoanCalculatorIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    // Injects the Jackson ObjectMapper to serialize request DTOs and deserialize the response payload.
-    @Autowired
-    private ObjectMapper objectMapper;
+    // Configures a Jackson ObjectMapper locally to serialize and deserialize payloads without relying on context beans.
+    private final ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
+            // Registers JavaTimeModule so LocalDateTime fields are serialized consistently with the API configuration.
+            .modules(new JavaTimeModule())
+            // Disables timestamp writing to keep date-time formatting aligned with human-readable patterns.
+            .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            // Builds the fully configured ObjectMapper instance for test serialization and deserialization.
+            .build();
 
     // Marks this method as a JUnit 5 test case that verifies loan requests are persisted and schedules are returned.
     @Test
