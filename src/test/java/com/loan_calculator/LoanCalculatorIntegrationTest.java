@@ -2,8 +2,8 @@ package com.loan_calculator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 // Activates the "test" profile to isolate configuration for integration tests.
 @ActiveProfiles("test")
-class LoanRequestControllerIT {
+class LoanCalculatorIntegrationTest {
 
     // Injects the configured MockMvc instance to perform HTTP requests against the application context.
     @Autowired
