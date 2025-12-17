@@ -7,6 +7,8 @@ import com.loan_calculator.entity.LoanRequest;
 import com.loan_calculator.mappers.LoanRequestMapper;
 import com.loan_calculator.repository.LoanRequestRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@AllArgsConstructor // for dependency injection for loanRequestRepository
+@AllArgsConstructor // for dependency injection for loanRequestRepository and loanRequestMapper
 public class LoanService {
 
     private static final RoundingMode ROUNDING = RoundingMode.HALF_EVEN; // banker's rounding
@@ -25,9 +27,9 @@ public class LoanService {
     private final LoanRequestRepository loanRequestRepository;
     private final LoanRequestMapper loanRequestMapper;
 
-    public List<LoanResponseDTO> getAllLoans() {
-        List<LoanRequest> savedLoans = loanRequestRepository.findAll();
-        return loanRequestMapper.toLoanResponseDTOs(savedLoans);
+    public Page<LoanResponseDTO> getAllLoans(Pageable pageable) {
+        return loanRequestRepository.findAll(pageable)
+                .map(loanRequestMapper::toResponseDTO);
     }
 
     public LoanResponseDTO createLoan(CreateLoanRequestDTO createLoanRequestDTO) {
