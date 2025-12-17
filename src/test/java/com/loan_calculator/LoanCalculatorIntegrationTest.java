@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,6 +27,8 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.matchesPattern;
 
 // Bootstraps the full application context and runs the server on a random port for end-to-end testing.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -65,6 +68,45 @@ class LoanCalculatorIntegrationTest {
         assertCreationTimestampFormat(actualResponse.getCreationTimestamp());
         List<InstallmentDTO> actualInstallments = actualResponse.getInstallments();
         assertInstallments(expectedInstallments, actualInstallments);
+    }
+
+    @Test
+    void getLoansReturnsOnlySavedLoan() throws Exception {
+        CreateLoanRequestDTO requestPayload = setupLoanRequest();
+        List<InstallmentDTO> expectedInstallments = setUpInstallments();
+        jsonMapper = JsonMapper.builder().build();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        Assertions.assertDoesNotThrow(() -> mockMvc.perform(
+                        MockMvcRequestBuilders.post("/loans")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonMapper.writeValueAsString(requestPayload)))
+                .andExpect(MockMvcResultMatchers.status().isOk()));
+
+        ResultActions getLoansResponse = mockMvc.perform(MockMvcRequestBuilders.get("/loans"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content", hasSize(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].loanAmount").value(10_000))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].loanTerm").value(5))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].interestRate").value(5.3))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].creationTimestamp")
+                        .value(matchesPattern("\\d{2} [A-Za-z]+ \\d{4} \\d{2}:\\d{2}")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].installments", hasSize(expectedInstallments.size())));
+
+        for (int i = 0; i < expectedInstallments.size(); i++) {
+            InstallmentDTO expected = expectedInstallments.get(i);
+            getLoansResponse
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].installments[" + i + "].month")
+                            .value(expected.getMonth()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].installments[" + i + "].paymentAmount")
+                            .value(expected.getPaymentAmount()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].installments[" + i + "].principalAmount")
+                            .value(expected.getPrincipalAmount()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].installments[" + i + "].interestAmount")
+                            .value(expected.getInterestAmount()))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].installments[" + i + "].balanceOwed")
+                            .value(expected.getBalanceOwed()));
+        }
     }
 
     private CreateLoanRequestDTO setupLoanRequest() {
