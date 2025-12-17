@@ -37,7 +37,7 @@ class LoanCalculatorIntegrationTest {
     private MockMvc mockMvc;
 
     // Configures a Jackson ObjectMapper locally to serialize and deserialize payloads without relying on context beans.
-    private final ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
+    private final ObjectMapper objectMapper = new Jackson2ObjectMapperBuilder()
             // Registers JavaTimeModule so LocalDateTime fields are serialized consistently with the API configuration.
             .modules(new JavaTimeModule())
             // Disables timestamp writing to keep date-time formatting aligned with human-readable patterns.
