@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor // for MapStruct (Installment -> InstallmentDTO)
 @Setter  // for MapStruct
 @Getter // for Jackson (InstallmentDTO -> JSON)
-@EqualsAndHashCode // for unit testing
+@EqualsAndHashCode // for integration testing
 public class InstallmentDTO {
 
     private int month;
