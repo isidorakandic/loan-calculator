@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@AllArgsConstructor // for dependency injection for loanRequestRepository
+@AllArgsConstructor // for dependency injection for loanRequestRepository and loanRequestMapper
 public class LoanService {
 
     private static final RoundingMode ROUNDING = RoundingMode.HALF_EVEN; // banker's rounding
