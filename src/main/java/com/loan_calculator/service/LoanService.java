@@ -25,6 +25,11 @@ public class LoanService {
     private final LoanRequestRepository loanRequestRepository;
     private final LoanRequestMapper loanRequestMapper;
 
+    public List<LoanResponseDTO> getAllLoans() {
+        List<LoanRequest> savedLoans = loanRequestRepository.findAll();
+        return loanRequestMapper.toLoanResponseDTOs(savedLoans);
+    }
+
     public LoanResponseDTO createLoan(CreateLoanRequestDTO createLoanRequestDTO) {
 
         LoanRequest createLoanRequest = loanRequestMapper.toEntity(createLoanRequestDTO);
