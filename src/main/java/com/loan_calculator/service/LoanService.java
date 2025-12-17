@@ -28,23 +28,19 @@ public class LoanService {
     private final LoanRequestMapper loanRequestMapper;
 
     public Page<LoanResponseDTO> getAllLoans(Pageable pageable) {
-        return loanRequestRepository.findAll(pageable)
-                .map(loanRequestMapper::toResponseDTO);
+        return loanRequestRepository.findAll(pageable).map(loanRequestMapper::toResponseDTO);
     }
 
     public LoanResponseDTO createLoan(CreateLoanRequestDTO createLoanRequestDTO) {
 
-        LoanRequest createLoanRequest = loanRequestMapper.toEntity(createLoanRequestDTO);
+        LoanRequest loanRequest = loanRequestMapper.toEntity(createLoanRequestDTO);
 
-        List<Installment> installments = calculateInstallments(createLoanRequest);
+        List<Installment> installments = calculateInstallments(loanRequest);
 
-        LoanRequest finalCreateLoanRequest = createLoanRequest;
-        installments.forEach(installment -> installment.setLoanRequest(finalCreateLoanRequest));
-        createLoanRequest.setInstallments(installments);
+        loanRequest.setInstallments(installments);
+        loanRequest = loanRequestRepository.save(loanRequest);
 
-        createLoanRequest = loanRequestRepository.save(createLoanRequest);
-
-        return loanRequestMapper.toResponseDTO(createLoanRequest);
+        return loanRequestMapper.toResponseDTO(loanRequest);
     }
 
     List<Installment> calculateInstallments(LoanRequest loanRequest) {

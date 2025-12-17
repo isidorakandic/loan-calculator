@@ -32,11 +32,14 @@ public class LoanRequest {
     private Integer loanTerm;
 
     @OneToMany(mappedBy = "loanRequest", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Setter // for setting calculated installments in LoanService
     private List<Installment> installments = new ArrayList<>();
 
     @Setter
     @CreationTimestamp
     private LocalDateTime creationTimestamp;
 
+    public void setInstallments(List<Installment> installments) {
+        this.installments = installments;
+        installments.forEach(installment -> installment.setLoanRequest(this));
+    }
 }
