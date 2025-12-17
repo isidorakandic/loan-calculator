@@ -77,21 +77,21 @@ class LoanCalculatorIntegrationTest {
 
     private List<InstallmentDTO> setUpInstallments() {
         return List.of(
-                buildInstallment(1, 2026.58, 1982.41, 44.17, 8017.59),
-                buildInstallment(2, 2026.58, 1991.17, 35.41, 6026.42),
-                buildInstallment(3, 2026.58, 1999.96, 26.62, 4026.46),
-                buildInstallment(4, 2026.58, 2008.80, 17.78, 2017.66),
-                buildInstallment(5, 2026.57, 2017.66, 8.91, 0)
+                buildInstallment(1, new BigDecimal("2026.58"), new BigDecimal("1982.41"), new BigDecimal("44.17"), new BigDecimal("8017.59")),
+                buildInstallment(2, new BigDecimal("2026.58"), new BigDecimal("1991.17"), new BigDecimal("35.41"), new BigDecimal("6026.42")),
+                buildInstallment(3, new BigDecimal("2026.58"), new BigDecimal("1999.96"), new BigDecimal("26.62"), new BigDecimal("4026.46")),
+                buildInstallment(4, new BigDecimal("2026.58"), new BigDecimal("2008.80"), new BigDecimal("17.78"), new BigDecimal("2017.66")),
+                buildInstallment(5, new BigDecimal("2026.57"), new BigDecimal("2017.66"), new BigDecimal("8.91"), new BigDecimal("0"))
         );
     }
 
-    private InstallmentDTO buildInstallment(int month, double paymentAmount, double principalAmount, double interestAmount, double balanceOwed) {
+    private InstallmentDTO buildInstallment(int month, BigDecimal paymentAmount, BigDecimal principalAmount, BigDecimal interestAmount, BigDecimal balanceOwed) {
         InstallmentDTO installmentDTO = new InstallmentDTO();
         installmentDTO.setMonth(month);
-        installmentDTO.setPaymentAmount(BigDecimal.valueOf(paymentAmount));
-        installmentDTO.setPrincipalAmount(BigDecimal.valueOf(principalAmount));
-        installmentDTO.setInterestAmount(BigDecimal.valueOf(interestAmount));
-        installmentDTO.setBalanceOwed(BigDecimal.valueOf(balanceOwed));
+        installmentDTO.setPaymentAmount(paymentAmount);
+        installmentDTO.setPrincipalAmount(principalAmount);
+        installmentDTO.setInterestAmount(interestAmount);
+        installmentDTO.setBalanceOwed(balanceOwed);
         return installmentDTO;
     }
 
