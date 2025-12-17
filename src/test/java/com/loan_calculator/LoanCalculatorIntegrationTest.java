@@ -14,7 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -29,35 +31,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 // Enables and configures MockMvc so HTTP requests can be performed without starting a real server.
 @AutoConfigureMockMvc
-// Activates the "test" profile to isolate configuration for integration tests.
 @ActiveProfiles("test")
+@Transactional
 class LoanCalculatorIntegrationTest {
 
-    // Injects the configured MockMvc instance to perform HTTP requests against the application context.
     @Autowired
     private MockMvc mockMvc;
 
-    JsonMapper jsonMapper = JsonMapper.builder().build();
+    JsonMapper jsonMapper;
 
     @Test
     void postLoansPersistsAndReturnsAmortizationSchedule() throws UnsupportedEncodingException {
 
         CreateLoanRequestDTO requestPayload = setupLoanRequest();
         List<InstallmentDTO> expectedInstallments = setUpInstallments();
-
+        jsonMapper = JsonMapper.builder().build();
         jsonMapper.registerModule(new JavaTimeModule());
 
-        // Performs the POST request to /loan with the request DTO serialized as JSON and asserts an OK status.
-        MvcResult mvcResult = Assertions.assertDoesNotThrow(() -> mockMvc.perform( // Executes the request and fails the test if serialization or MVC throws.
-                        org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/loans") // Configures a POST to the /loan endpoint.
-                                .contentType(MediaType.APPLICATION_JSON) // Sends JSON so the controller binds to CreateLoanRequestDTO.
-                                .content(jsonMapper.writeValueAsString(requestPayload))) // Serializes the request DTO into the HTTP body.
-                .andExpect(MockMvcResultMatchers.status().isOk()) // Asserts the endpoint responds with HTTP 200 OK.
-                .andReturn()); // Captures the full MVC result for response body inspection.
+        MvcResult mvcResult = Assertions.assertDoesNotThrow(() -> mockMvc.perform(
+                        MockMvcRequestBuilders.post("/loans")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonMapper.writeValueAsString(requestPayload)))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn());
 
-        // Extracts the raw JSON response body for further inspection.
         String responseBody = mvcResult.getResponse().getContentAsString();
-        // Deserializes the response into a strongly typed DTO to improve field-level validation and readability.
         LoanResponseDTO actualResponse = Assertions.assertDoesNotThrow(
                 () -> jsonMapper.readValue(responseBody, LoanResponseDTO.class)
         );
@@ -66,7 +63,6 @@ class LoanCalculatorIntegrationTest {
         Assertions.assertEquals(5, actualResponse.getLoanTerm());
         Assertions.assertEquals(BigDecimal.valueOf(5.3), actualResponse.getInterestRate());
         assertCreationTimestampFormat(actualResponse.getCreationTimestamp());
-
         List<InstallmentDTO> actualInstallments = actualResponse.getInstallments();
         assertInstallments(expectedInstallments, actualInstallments);
     }
@@ -99,8 +95,7 @@ class LoanCalculatorIntegrationTest {
         return installmentDTO;
     }
 
-    private void assertInstallments(List<InstallmentDTO> expectedInstallments,
-                                    List<InstallmentDTO> actualInstallments) {
+    private void assertInstallments(List<InstallmentDTO> expectedInstallments, List<InstallmentDTO> actualInstallments) {
 
         Assertions.assertNotNull(actualInstallments);
         Assertions.assertEquals(expectedInstallments.size(), actualInstallments.size());
@@ -116,10 +111,9 @@ class LoanCalculatorIntegrationTest {
     }
 
     private void assertCreationTimestampFormat(LocalDateTime creationTimestamp) {
-        Assertions.assertNotNull(creationTimestamp, "creationTimestamp should be present");
+        Assertions.assertNotNull(creationTimestamp);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", Locale.ENGLISH);
         String creationTimestampString = creationTimestamp.format(formatter);
-        Assertions.assertDoesNotThrow(() -> LocalDateTime.parse(creationTimestampString, formatter),
-                "creationTimestamp should match format 'dd MMMM yyyy HH:mm'");
+        Assertions.assertDoesNotThrow(() -> LocalDateTime.parse(creationTimestampString, formatter));
     }
 }
