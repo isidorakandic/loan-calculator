@@ -1,0 +1,111 @@
+@startuml
+!theme vibrant
+skinparam classAttributeIconSize 0
+
+interface JpaRepository <<external>>
+
+
+class LoanService {
+    -LoanRequestRepositor
+    -LoanRequestMapper
+    +Page<LoanResponseDTO> getAllLoans(Pageable)
+    +LoanResponseDTO createLoan(CreateLoanRequestDTO)
+}
+
+class LoanRequestController {
+    -LoanService
+    +LoanResponseDTO createLoan(CreateLoanRequestDTO)
+    +Page<LoanResponseDTO> getAllLoans(Pageable)
+}
+
+interface LoanRequestRepository {
+}
+
+interface LoanRequestMapper {
+    +LoanRequest toEntity(CreateLoanRequestDTO)
+    +LoanResponseDTO toResponseDTO(LoanRequest)
+    +InstallmentDTO toInstallmentDTO(Installment)
+    +List<InstallmentDTO> toInstallmentDTOs(List<Installment>)
+    +List<LoanResponseDTO> toLoanResponseDTOs(List<LoanRequest>)
+}
+
+class CreateLoanRequestDTO {
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -int loanTerm
+}
+
+class LoanResponseDTO {
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -int loanTerm
+    -List<InstallmentDTO> installments
+    -LocalDateTime creationTimestamp
+}
+
+class InstallmentDTO {
+    -int month
+    -BigDecimal paymentAmount
+    -BigDecimal principalAmount
+    -BigDecimal interestAmount
+    -BigDecimal balanceOwed
+}
+
+class LoanRequest {
+    -Long id
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -Integer loanTerm
+    -List<Installment> installments
+    -LocalDateTime creationTimestamp
+}
+
+class Installment {
+    -Long id
+    -Integer month
+    -BigDecimal paymentAmount
+    -BigDecimal principalAmount
+    -BigDecimal interestAmount
+    -BigDecimal balanceOwed
+    -LoanRequest loanRequest
+}
+
+/'
+class GlobalExceptionHandler {
+    -static final Logger log
+    +ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException exception)
+    +ErrorResponse handleJsonParseError(HttpMessageNotReadableException exception)
+    +ErrorResponse handlePaginationError(InvalidDataAccessApiUsageException exception)
+    +ErrorResponse handleNoResourceError(NoResourceFoundException exception)
+    +ErrorResponse handleUnexpected(Exception exception)
+    -static List<String> extractMessages(MethodArgumentNotValidException exception)
+}
+
+class ErrorResponse {
+    -List<String> errors
+}
+'/
+
+LoanService --> LoanRequestRepository
+LoanService --> LoanRequestMapper
+LoanService ..> LoanRequest
+LoanService ..> Installment
+LoanService ..> CreateLoanRequestDTO
+LoanService ..> LoanResponseDTO
+LoanRequestController --> LoanService
+LoanRequestController ..> CreateLoanRequestDTO
+LoanRequestController ..> LoanResponseDTO
+/'
+LoanRequestMapper ..> CreateLoanRequestDTO
+LoanRequestMapper ..> LoanResponseDTO
+LoanRequestMapper ..> Installment
+LoanRequestMapper ..> InstallmentDTO
+LoanRequestMapper ..> LoanRequest
+'/
+LoanResponseDTO *-- "many" InstallmentDTO
+LoanRequest *-- "many" Installment
+Installment --> LoanRequest
+LoanRequestRepository -down-|> JpaRepository
+
+GlobalExceptionHandler ..> ErrorResponse
+@enduml

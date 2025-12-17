@@ -11,6 +11,10 @@ retrieving their calculated monthly installments, persisting everything in MySQL
     - `POST /loans` — create a loan and return its amortization schedule.
     - `GET /loans` — list all stored loans with pagination.
 
+## UML class diagram
+
+![class diagram](diagrams/class-diagram.svg)
+
 ## Architecture
 
 The service follows a typical Spring layered architecture:

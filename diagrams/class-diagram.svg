@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="712px" preserveAspectRatio="none" style="width:1654px;height:712px;background:#FFFFFF;" version="1.1" viewBox="0 0 1654 712" width="1654px" zoomAndPan="magnify"><defs/><g><!--MD5=[5d9d7f361cf9aacac4ee237afb90f58a]
+class JpaRepository--><g id="elem_JpaRepository"><rect codeLine="4" fill="#F1F1F1" height="56.2656" id="JpaRepository" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="126" x="279.5" y="596"/><ellipse cx="294.5" cy="616.1328" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M290.4219,611.8984 L290.4219,609.7422 L297.8125,609.7422 L297.8125,611.8984 L295.3438,611.8984 L295.3438,619.9766 L297.8125,619.9766 L297.8125,622.1328 L290.4219,622.1328 L290.4219,619.9766 L292.8906,619.9766 L292.8906,611.8984 L290.4219,611.8984 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="65" x="323" y="612.1387">«external»</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="94" x="308.5" y="627.9639">JpaRepository</text><line style="stroke:#181818;stroke-width:0.5;" x1="280.5" x2="404.5" y1="636.2656" y2="636.2656"/><line style="stroke:#181818;stroke-width:0.5;" x1="280.5" x2="404.5" y1="644.2656" y2="644.2656"/></g><!--MD5=[6d90a3a88d51724149c5ed544cc39397]
+class LoanService--><g id="elem_LoanService"><rect codeLine="7" fill="#F1F1F1" height="113.1875" id="LoanService" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="419" x="485" y="164"/><ellipse cx="648.75" cy="180" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M651.7188,185.6406 Q651.1406,185.9375 650.5,186.0781 Q649.8594,186.2344 649.1563,186.2344 Q646.6563,186.2344 645.3281,184.5938 Q644.0156,182.9375 644.0156,179.8125 Q644.0156,176.6875 645.3281,175.0313 Q646.6563,173.375 649.1563,173.375 Q649.8594,173.375 650.5,173.5313 Q651.1563,173.6875 651.7188,173.9844 L651.7188,176.7031 Q651.0938,176.125 650.5,175.8594 Q649.9063,175.5781 649.2813,175.5781 Q647.9375,175.5781 647.25,176.6563 Q646.5625,177.7188 646.5625,179.8125 Q646.5625,181.9063 647.25,182.9844 Q647.9375,184.0469 649.2813,184.0469 Q649.9063,184.0469 650.5,183.7813 Q651.0938,183.5 651.7188,182.9219 L651.7188,185.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83" x="669.25" y="184.8467">LoanService</text><line style="stroke:#181818;stroke-width:0.5;" x1="486" x2="903" y1="196" y2="196"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="164" x="491" y="212.9951">-LoanRequestRepositor</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="149" x="491" y="229.292">-LoanRequestMapper</text><line style="stroke:#181818;stroke-width:0.5;" x1="486" x2="903" y1="236.5938" y2="236.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="363" x="491" y="253.5889">+Page&lt;LoanResponseDTO&gt; getAllLoans(Pageable)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="407" x="491" y="269.8857">+LoanResponseDTO createLoan(CreateLoanRequestDTO)</text></g><!--MD5=[020032b7573fd76f477fd272871e419a]
+class LoanRequestController--><g id="elem_LoanRequestController"><rect codeLine="14" fill="#F1F1F1" height="96.8906" id="LoanRequestController" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="419" x="485" y="7"/><ellipse cx="610.75" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M613.7188,28.6406 Q613.1406,28.9375 612.5,29.0781 Q611.8594,29.2344 611.1563,29.2344 Q608.6563,29.2344 607.3281,27.5938 Q606.0156,25.9375 606.0156,22.8125 Q606.0156,19.6875 607.3281,18.0313 Q608.6563,16.375 611.1563,16.375 Q611.8594,16.375 612.5,16.5313 Q613.1563,16.6875 613.7188,16.9844 L613.7188,19.7031 Q613.0938,19.125 612.5,18.8594 Q611.9063,18.5781 611.2813,18.5781 Q609.9375,18.5781 609.25,19.6563 Q608.5625,20.7188 608.5625,22.8125 Q608.5625,24.9063 609.25,25.9844 Q609.9375,27.0469 611.2813,27.0469 Q611.9063,27.0469 612.5,26.7813 Q613.0938,26.5 613.7188,25.9219 L613.7188,28.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159" x="631.25" y="27.8467">LoanRequestController</text><line style="stroke:#181818;stroke-width:0.5;" x1="486" x2="903" y1="39" y2="39"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88" x="491" y="55.9951">-LoanService</text><line style="stroke:#181818;stroke-width:0.5;" x1="486" x2="903" y1="63.2969" y2="63.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="407" x="491" y="80.292">+LoanResponseDTO createLoan(CreateLoanRequestDTO)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="363" x="491" y="96.5889">+Page&lt;LoanResponseDTO&gt; getAllLoans(Pageable)</text></g><!--MD5=[33b9501a63ef7ea6b7f2f5d21248c768]
+class LoanRequestRepository--><g id="elem_LoanRequestRepository"><rect codeLine="20" fill="#F1F1F1" height="48" id="LoanRequestRepository" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="198" x="243.5" y="386"/><ellipse cx="258.5" cy="402" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M254.4219,397.7656 L254.4219,395.6094 L261.8125,395.6094 L261.8125,397.7656 L259.3438,397.7656 L259.3438,405.8438 L261.8125,405.8438 L261.8125,408 L254.4219,408 L254.4219,405.8438 L256.8906,405.8438 L256.8906,397.7656 L254.4219,397.7656 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="166" x="272.5" y="406.8467">LoanRequestRepository</text><line style="stroke:#181818;stroke-width:0.5;" x1="244.5" x2="440.5" y1="418" y2="418"/><line style="stroke:#181818;stroke-width:0.5;" x1="244.5" x2="440.5" y1="426" y2="426"/></g><!--MD5=[1d8e3818aed960c9f243784a28172234]
+class LoanRequestMapper--><g id="elem_LoanRequestMapper"><rect codeLine="23" fill="#F1F1F1" height="129.4844" id="LoanRequestMapper" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="516" x="838.5" y="345.5"/><ellipse cx="1020.25" cy="361.5" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1016.1719,357.2656 L1016.1719,355.1094 L1023.5625,355.1094 L1023.5625,357.2656 L1021.0938,357.2656 L1021.0938,365.3438 L1023.5625,365.3438 L1023.5625,367.5 L1016.1719,367.5 L1016.1719,365.3438 L1018.6406,365.3438 L1018.6406,357.2656 L1016.1719,357.2656 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="144" x="1040.75" y="366.3467">LoanRequestMapper</text><line style="stroke:#181818;stroke-width:0.5;" x1="839.5" x2="1353.5" y1="377.5" y2="377.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="839.5" x2="1353.5" y1="385.5" y2="385.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="339" x="844.5" y="402.4951">+LoanRequest toEntity(CreateLoanRequestDTO)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="369" x="844.5" y="418.792">+LoanResponseDTO toResponseDTO(LoanRequest)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="327" x="844.5" y="435.0889">+InstallmentDTO toInstallmentDTO(Installment)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="429" x="844.5" y="451.3857">+List&lt;InstallmentDTO&gt; toInstallmentDTOs(List&lt;Installment&gt;)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="504" x="844.5" y="467.6826">+List&lt;LoanResponseDTO&gt; toLoanResponseDTOs(List&lt;LoanRequest&gt;)</text></g><!--MD5=[31bf1d9e8137bfed5d559e2533c8a727]
+class CreateLoanRequestDTO--><g id="elem_CreateLoanRequestDTO"><rect codeLine="31" fill="#F1F1F1" height="96.8906" id="CreateLoanRequestDTO" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="201" x="7" y="361.5"/><ellipse cx="22" cy="377.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M24.9688,383.1406 Q24.3906,383.4375 23.75,383.5781 Q23.1094,383.7344 22.4063,383.7344 Q19.9063,383.7344 18.5781,382.0938 Q17.2656,380.4375 17.2656,377.3125 Q17.2656,374.1875 18.5781,372.5313 Q19.9063,370.875 22.4063,370.875 Q23.1094,370.875 23.75,371.0313 Q24.4063,371.1875 24.9688,371.4844 L24.9688,374.2031 Q24.3438,373.625 23.75,373.3594 Q23.1563,373.0781 22.5313,373.0781 Q21.1875,373.0781 20.5,374.1563 Q19.8125,375.2188 19.8125,377.3125 Q19.8125,379.4063 20.5,380.4844 Q21.1875,381.5469 22.5313,381.5469 Q23.1563,381.5469 23.75,381.2813 Q24.3438,381 24.9688,380.4219 L24.9688,383.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="36" y="382.3467">CreateLoanRequestDTO</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="207" y1="393.5" y2="393.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="13" y="410.4951">-BigDecimal loanAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="171" x="13" y="426.792">-BigDecimal interestRate</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="91" x="13" y="443.0889">-int loanTerm</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="207" y1="450.3906" y2="450.3906"/></g><!--MD5=[26272b47261ad9d8be97c7e6005d5a4b]
+class LoanResponseDTO--><g id="elem_LoanResponseDTO"><rect codeLine="37" fill="#F1F1F1" height="129.4844" id="LoanResponseDTO" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="257" x="1390" y="345.5"/><ellipse cx="1446.75" cy="361.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1449.7188,367.1406 Q1449.1406,367.4375 1448.5,367.5781 Q1447.8594,367.7344 1447.1563,367.7344 Q1444.6563,367.7344 1443.3281,366.0938 Q1442.0156,364.4375 1442.0156,361.3125 Q1442.0156,358.1875 1443.3281,356.5313 Q1444.6563,354.875 1447.1563,354.875 Q1447.8594,354.875 1448.5,355.0313 Q1449.1563,355.1875 1449.7188,355.4844 L1449.7188,358.2031 Q1449.0938,357.625 1448.5,357.3594 Q1447.9063,357.0781 1447.2813,357.0781 Q1445.9375,357.0781 1445.25,358.1563 Q1444.5625,359.2188 1444.5625,361.3125 Q1444.5625,363.4063 1445.25,364.4844 Q1445.9375,365.5469 1447.2813,365.5469 Q1447.9063,365.5469 1448.5,365.2813 Q1449.0938,365 1449.7188,364.4219 L1449.7188,367.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135" x="1467.25" y="366.3467">LoanResponseDTO</text><line style="stroke:#181818;stroke-width:0.5;" x1="1391" x2="1646" y1="377.5" y2="377.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="1396" y="394.4951">-BigDecimal loanAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="171" x="1396" y="410.792">-BigDecimal interestRate</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="91" x="1396" y="427.0889">-int loanTerm</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="245" x="1396" y="443.3857">-List&lt;InstallmentDTO&gt; installments</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="244" x="1396" y="459.6826">-LocalDateTime creationTimestamp</text><line style="stroke:#181818;stroke-width:0.5;" x1="1391" x2="1646" y1="466.9844" y2="466.9844"/></g><!--MD5=[64e2ec98879a7580d7c7ae39cd8d4da4]
+class InstallmentDTO--><g id="elem_InstallmentDTO"><rect codeLine="45" fill="#F1F1F1" height="129.4844" id="InstallmentDTO" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="212" x="1412.5" y="559.5"/><ellipse cx="1461.25" cy="575.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1464.2188,581.1406 Q1463.6406,581.4375 1463,581.5781 Q1462.3594,581.7344 1461.6563,581.7344 Q1459.1563,581.7344 1457.8281,580.0938 Q1456.5156,578.4375 1456.5156,575.3125 Q1456.5156,572.1875 1457.8281,570.5313 Q1459.1563,568.875 1461.6563,568.875 Q1462.3594,568.875 1463,569.0313 Q1463.6563,569.1875 1464.2188,569.4844 L1464.2188,572.2031 Q1463.5938,571.625 1463,571.3594 Q1462.4063,571.0781 1461.7813,571.0781 Q1460.4375,571.0781 1459.75,572.1563 Q1459.0625,573.2188 1459.0625,575.3125 Q1459.0625,577.4063 1459.75,578.4844 Q1460.4375,579.5469 1461.7813,579.5469 Q1462.4063,579.5469 1463,579.2813 Q1463.5938,579 1464.2188,578.4219 L1464.2188,581.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="106" x="1481.75" y="580.3467">InstallmentDTO</text><line style="stroke:#181818;stroke-width:0.5;" x1="1413.5" x2="1623.5" y1="591.5" y2="591.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71" x="1418.5" y="608.4951">-int month</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="200" x="1418.5" y="624.792">-BigDecimal paymentAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="197" x="1418.5" y="641.0889">-BigDecimal principalAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="193" x="1418.5" y="657.3857">-BigDecimal interestAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="180" x="1418.5" y="673.6826">-BigDecimal balanceOwed</text><line style="stroke:#181818;stroke-width:0.5;" x1="1413.5" x2="1623.5" y1="680.9844" y2="680.9844"/></g><!--MD5=[59d582773ce34c357fa139f7ce64dc97]
+class LoanRequest--><g id="elem_LoanRequest"><rect codeLine="53" fill="#F1F1F1" height="145.7813" id="LoanRequest" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="256" x="476.5" y="337"/><ellipse cx="554.25" cy="353" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M557.2188,358.6406 Q556.6406,358.9375 556,359.0781 Q555.3594,359.2344 554.6563,359.2344 Q552.1563,359.2344 550.8281,357.5938 Q549.5156,355.9375 549.5156,352.8125 Q549.5156,349.6875 550.8281,348.0313 Q552.1563,346.375 554.6563,346.375 Q555.3594,346.375 556,346.5313 Q556.6563,346.6875 557.2188,346.9844 L557.2188,349.7031 Q556.5938,349.125 556,348.8594 Q555.4063,348.5781 554.7813,348.5781 Q553.4375,348.5781 552.75,349.6563 Q552.0625,350.7188 552.0625,352.8125 Q552.0625,354.9063 552.75,355.9844 Q553.4375,357.0469 554.7813,357.0469 Q555.4063,357.0469 556,356.7813 Q556.5938,356.5 557.2188,355.9219 L557.2188,358.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92" x="574.75" y="357.8467">LoanRequest</text><line style="stroke:#181818;stroke-width:0.5;" x1="477.5" x2="731.5" y1="369" y2="369"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55" x="482.5" y="385.9951">-Long id</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="482.5" y="402.292">-BigDecimal loanAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="171" x="482.5" y="418.5889">-BigDecimal interestRate</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="123" x="482.5" y="434.8857">-Integer loanTerm</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="214" x="482.5" y="451.1826">-List&lt;Installment&gt; installments</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="244" x="482.5" y="467.4795">-LocalDateTime creationTimestamp</text><line style="stroke:#181818;stroke-width:0.5;" x1="477.5" x2="731.5" y1="474.7813" y2="474.7813"/></g><!--MD5=[93a77f2fe99a835e15fe0ab145b42e46]
+class Installment--><g id="elem_Installment"><rect codeLine="62" fill="#F1F1F1" height="162.0781" id="Installment" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="212" x="498.5" y="543"/><ellipse cx="562.75" cy="559" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M565.7188,564.6406 Q565.1406,564.9375 564.5,565.0781 Q563.8594,565.2344 563.1563,565.2344 Q560.6563,565.2344 559.3281,563.5938 Q558.0156,561.9375 558.0156,558.8125 Q558.0156,555.6875 559.3281,554.0313 Q560.6563,552.375 563.1563,552.375 Q563.8594,552.375 564.5,552.5313 Q565.1563,552.6875 565.7188,552.9844 L565.7188,555.7031 Q565.0938,555.125 564.5,554.8594 Q563.9063,554.5781 563.2813,554.5781 Q561.9375,554.5781 561.25,555.6563 Q560.5625,556.7188 560.5625,558.8125 Q560.5625,560.9063 561.25,561.9844 Q561.9375,563.0469 563.2813,563.0469 Q563.9063,563.0469 564.5,562.7813 Q565.0938,562.5 565.7188,561.9219 L565.7188,564.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="583.25" y="563.8467">Installment</text><line style="stroke:#181818;stroke-width:0.5;" x1="499.5" x2="709.5" y1="575" y2="575"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55" x="504.5" y="591.9951">-Long id</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="103" x="504.5" y="608.292">-Integer month</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="200" x="504.5" y="624.5889">-BigDecimal paymentAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="197" x="504.5" y="640.8857">-BigDecimal principalAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="193" x="504.5" y="657.1826">-BigDecimal interestAmount</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="180" x="504.5" y="673.4795">-BigDecimal balanceOwed</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="189" x="504.5" y="689.7764">-LoanRequest loanRequest</text><line style="stroke:#181818;stroke-width:0.5;" x1="499.5" x2="709.5" y1="697.0781" y2="697.0781"/></g><!--MD5=[0bf6cc7671acd830f68456d528990499]
+class GlobalExceptionHandler--><g id="elem_GlobalExceptionHandler"><rect fill="#F1F1F1" height="48" id="GlobalExceptionHandler" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="196" x="1305.5" y="31.5"/><ellipse cx="1320.5" cy="47.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1323.4688,53.1406 Q1322.8906,53.4375 1322.25,53.5781 Q1321.6094,53.7344 1320.9063,53.7344 Q1318.4063,53.7344 1317.0781,52.0938 Q1315.7656,50.4375 1315.7656,47.3125 Q1315.7656,44.1875 1317.0781,42.5313 Q1318.4063,40.875 1320.9063,40.875 Q1321.6094,40.875 1322.25,41.0313 Q1322.9063,41.1875 1323.4688,41.4844 L1323.4688,44.2031 Q1322.8438,43.625 1322.25,43.3594 Q1321.6563,43.0781 1321.0313,43.0781 Q1319.6875,43.0781 1319,44.1563 Q1318.3125,45.2188 1318.3125,47.3125 Q1318.3125,49.4063 1319,50.4844 Q1319.6875,51.5469 1321.0313,51.5469 Q1321.6563,51.5469 1322.25,51.2813 Q1322.8438,51 1323.4688,50.4219 L1323.4688,53.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="164" x="1334.5" y="52.3467">GlobalExceptionHandler</text><line style="stroke:#181818;stroke-width:0.5;" x1="1306.5" x2="1500.5" y1="63.5" y2="63.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="1306.5" x2="1500.5" y1="71.5" y2="71.5"/></g><!--MD5=[d70279aee16cb60954d73d22597b95b5]
+class ErrorResponse--><g id="elem_ErrorResponse"><rect fill="#F1F1F1" height="48" id="ErrorResponse" rx="3.5" ry="3.5" style="stroke:#181818;stroke-width:0.5;" width="136" x="1335.5" y="196.5"/><ellipse cx="1350.5" cy="212.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1353.4688,218.1406 Q1352.8906,218.4375 1352.25,218.5781 Q1351.6094,218.7344 1350.9063,218.7344 Q1348.4063,218.7344 1347.0781,217.0938 Q1345.7656,215.4375 1345.7656,212.3125 Q1345.7656,209.1875 1347.0781,207.5313 Q1348.4063,205.875 1350.9063,205.875 Q1351.6094,205.875 1352.25,206.0313 Q1352.9063,206.1875 1353.4688,206.4844 L1353.4688,209.2031 Q1352.8438,208.625 1352.25,208.3594 Q1351.6563,208.0781 1351.0313,208.0781 Q1349.6875,208.0781 1349,209.1563 Q1348.3125,210.2188 1348.3125,212.3125 Q1348.3125,214.4063 1349,215.4844 Q1349.6875,216.5469 1351.0313,216.5469 Q1351.6563,216.5469 1352.25,216.2813 Q1352.8438,216 1353.4688,215.4219 L1353.4688,218.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104" x="1364.5" y="217.3467">ErrorResponse</text><line style="stroke:#181818;stroke-width:0.5;" x1="1336.5" x2="1470.5" y1="228.5" y2="228.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="1336.5" x2="1470.5" y1="236.5" y2="236.5"/></g><!--MD5=[c4f8113141185fda40be6399214c55f0]
+link LoanService to LoanRequestRepository--><g id="link_LoanService_LoanRequestRepository"><path codeLine="88" d="M575.06,277.08 C537.36,295.38 495.82,316.35 458.5,337 C432.54,351.36 404.24,368.89 382.09,383.05 " fill="none" id="LoanService-to-LoanRequestRepository" style="stroke:#454645;stroke-width:1.0;"/><polygon fill="#454645" points="377.74,385.84,387.4759,384.3529,381.9501,383.1427,383.1603,377.6168,377.74,385.84" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[a0288b9a2f06c81ada031651d357450b]
+link LoanService to LoanRequestMapper--><g id="link_LoanService_LoanRequestMapper"><path codeLine="89" d="M813.75,277.12 C858.29,297.89 909.28,321.68 955.58,343.27 " fill="none" id="LoanService-to-LoanRequestMapper" style="stroke:#454645;stroke-width:1.0;"/><polygon fill="#454645" points="960.34,345.49,953.8772,338.0582,955.8094,343.3748,950.4928,345.3071,960.34,345.49" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[4d30ac20537e1fe49cd6aafb9f83b84e]
+link LoanService to LoanRequest--><g id="link_LoanService_LoanRequest"><path codeLine="90" d="M667.74,277.25 C659.48,294.46 650.23,313.74 641.4,332.12 " fill="none" id="LoanService-to-LoanRequest" style="stroke:#454645;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#454645" points="639.17,336.77,646.6674,330.3833,641.3313,332.2613,639.4534,326.9252,639.17,336.77" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[d2c5e63435dc704c859b86a9d2a36d11]
+link LoanService to Installment--><g id="link_LoanService_Installment"><path codeLine="91" d="M727.17,277.25 C736.26,295.65 744.9,316.64 749.5,337 C763.8,400.29 774.86,423.27 749.5,483 C740.86,503.36 727.64,522.21 712.63,539.04 " fill="none" id="LoanService-to-Installment" style="stroke:#454645;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#454645" points="709.2,542.82,718.2184,538.8616,712.5676,539.1242,712.3051,533.4734,709.2,542.82" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[7e36a2d58f65419c096738d07c9bfd75]
+link LoanService to CreateLoanRequestDTO--><g id="link_LoanService_CreateLoanRequestDTO"><path codeLine="92" d="M484.94,258.73 C402.29,277.09 307.65,302.78 225.5,337 C210.94,343.06 196.09,350.76 182.04,358.84 " fill="none" id="LoanService-to-CreateLoanRequestDTO" style="stroke:#454645;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#454645" points="177.71,361.36,187.4999,360.2843,182.0299,358.8424,183.4718,353.3724,177.71,361.36" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[e4640648ed6ea883951bcbc28ab59ff3]
+link LoanService to LoanResponseDTO--><g id="link_LoanService_LoanResponseDTO"><path codeLine="93" d="M904.11,241.57 C1039.76,258.36 1218.88,287.74 1371.5,337 C1377.64,338.98 1383.85,341.18 1390.07,343.54 " fill="none" id="LoanService-to-LoanResponseDTO" style="stroke:#454645;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#454645" points="1394.82,345.37,1387.8601,338.4015,1390.1544,343.5722,1384.9837,345.8665,1394.82,345.37" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[d454419da1f649b2c4261766e35d0002]
+link LoanRequestController to LoanService--><g id="link_LoanRequestController_LoanService"><path codeLine="94" d="M694.5,104.08 C694.5,121.18 694.5,140.69 694.5,158.75 " fill="none" id="LoanRequestController-to-LoanService" style="stroke:#454645;stroke-width:1.0;"/><polygon fill="#454645" points="694.5,163.8,698.5,154.8,694.5,158.8,690.5,154.8,694.5,163.8" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[bb1dee5536b7e42aac123ca3f2343866]
+link LoanRequestController to CreateLoanRequestDTO--><g id="link_LoanRequestController_CreateLoanRequestDTO"><path codeLine="95" d="M585.36,104 C547.4,121.62 504.97,142.55 467.5,164 C361.52,224.67 245.95,306.32 175.09,358.32 " fill="none" id="LoanRequestController-to-CreateLoanRequestDTO" style="stroke:#454645;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#454645" points="170.91,361.39,180.5273,359.2668,174.9338,358.4221,175.7786,352.8286,170.91,361.39" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[40d8d3de2d6c4ff5ef20dcdef2833a8a]
+link LoanRequestController to LoanResponseDTO--><g id="link_LoanRequestController_LoanResponseDTO"><path codeLine="96" d="M815.63,104.03 C951.85,158.09 1179.17,250.16 1371.5,337 C1375.97,339.02 1380.5,341.09 1385.07,343.2 " fill="none" id="LoanRequestController-to-LoanResponseDTO" style="stroke:#454645;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#454645" points="1389.65,345.32,1383.159,337.9128,1385.1115,343.222,1379.8022,345.1744,1389.65,345.32" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[5623ad5c306e021c2fbfdfc203fc80a1]
+reverse link LoanResponseDTO to InstallmentDTO--><g id="link_LoanResponseDTO_InstallmentDTO"><path codeLine="104" d="M1518.5,487.8 C1518.5,511.31 1518.5,536.91 1518.5,559.44 " fill="none" id="LoanResponseDTO-backto-InstallmentDTO" style="stroke:#454645;stroke-width:1.0;"/><polygon fill="#454645" points="1518.5,474.61,1514.5,480.61,1518.5,486.61,1522.5,480.61,1518.5,474.61" style="stroke:#454645;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="36" x="1480.5313" y="548.6061">many</text></g><!--MD5=[f09747f83c17dd07104cc6bda63db395]
+reverse link LoanRequest to Installment--><g id="link_LoanRequest_Installment"><path codeLine="105" d="M591.97,496.35 C591.64,511.67 591.68,527.59 592.09,542.76 " fill="none" id="LoanRequest-backto-Installment" style="stroke:#454645;stroke-width:1.0;"/><polygon fill="#454645" points="592.35,483.07,588.1801,488.9532,592.0069,495.0651,596.1768,489.1819,592.35,483.07" style="stroke:#454645;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="36" x="553.3816" y="531.9259">many</text></g><!--MD5=[9fdbb61c0724693da9dfd260afbccf25]
+link Installment to LoanRequest--><g id="link_Installment_LoanRequest"><path codeLine="106" d="M617.64,542.76 C618.15,524.98 618.12,506.18 617.56,488.51 " fill="none" id="Installment-to-LoanRequest" style="stroke:#454645;stroke-width:1.0;"/><polygon fill="#454645" points="617.37,483.07,613.7068,492.2123,617.5556,488.0666,621.7013,491.9153,617.37,483.07" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[1ea0a2a8bc7a5a2f5b6bf215b1b480be]
+link LoanRequestRepository to JpaRepository--><g id="link_LoanRequestRepository_JpaRepository"><path codeLine="107" d="M342.5,434.09 C342.5,467.95 342.5,531.82 342.5,575.86 " fill="none" id="LoanRequestRepository-to-JpaRepository" style="stroke:#454645;stroke-width:1.0;"/><polygon fill="none" points="349.5,575.95,342.5,595.95,335.5,575.95,349.5,575.95" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[d7dd3d784598f73100c39d2df611899e]
+link GlobalExceptionHandler to ErrorResponse--><g id="link_GlobalExceptionHandler_ErrorResponse"><path codeLine="109" d="M1403.5,79.51 C1403.5,108.79 1403.5,159.37 1403.5,191.05 " fill="none" id="GlobalExceptionHandler-to-ErrorResponse" style="stroke:#454645;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#454645" points="1403.5,196.35,1407.5,187.35,1403.5,191.35,1399.5,187.35,1403.5,196.35" style="stroke:#454645;stroke-width:1.0;"/></g><!--MD5=[da495ad7f5f868db5af6b2d95695d7f8]
+@startuml
+!theme vibrant
+skinparam classAttributeIconSize 0
+
+interface JpaRepository <<external>>
+
+
+class LoanService {
+    -LoanRequestRepositor
+    -LoanRequestMapper
+    +Page<LoanResponseDTO> getAllLoans(Pageable)
+    +LoanResponseDTO createLoan(CreateLoanRequestDTO)
+}
+
+class LoanRequestController {
+    -LoanService
+    +LoanResponseDTO createLoan(CreateLoanRequestDTO)
+    +Page<LoanResponseDTO> getAllLoans(Pageable)
+}
+
+interface LoanRequestRepository {
+}
+
+interface LoanRequestMapper {
+    +LoanRequest toEntity(CreateLoanRequestDTO)
+    +LoanResponseDTO toResponseDTO(LoanRequest)
+    +InstallmentDTO toInstallmentDTO(Installment)
+    +List<InstallmentDTO> toInstallmentDTOs(List<Installment>)
+    +List<LoanResponseDTO> toLoanResponseDTOs(List<LoanRequest>)
+}
+
+class CreateLoanRequestDTO {
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -int loanTerm
+}
+
+class LoanResponseDTO {
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -int loanTerm
+    -List<InstallmentDTO> installments
+    -LocalDateTime creationTimestamp
+}
+
+class InstallmentDTO {
+    -int month
+    -BigDecimal paymentAmount
+    -BigDecimal principalAmount
+    -BigDecimal interestAmount
+    -BigDecimal balanceOwed
+}
+
+class LoanRequest {
+    -Long id
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -Integer loanTerm
+    -List<Installment> installments
+    -LocalDateTime creationTimestamp
+}
+
+class Installment {
+    -Long id
+    -Integer month
+    -BigDecimal paymentAmount
+    -BigDecimal principalAmount
+    -BigDecimal interestAmount
+    -BigDecimal balanceOwed
+    -LoanRequest loanRequest
+}
+
+/'
+class GlobalExceptionHandler {
+    -static final Logger log
+    +ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException exception)
+    +ErrorResponse handleJsonParseError(HttpMessageNotReadableException exception)
+    +ErrorResponse handlePaginationError(InvalidDataAccessApiUsageException exception)
+    +ErrorResponse handleNoResourceError(NoResourceFoundException exception)
+    +ErrorResponse handleUnexpected(Exception exception)
+    -static List<String> extractMessages(MethodArgumentNotValidException exception)
+}
+
+class ErrorResponse {
+    -List<String> errors
+}
+'/
+
+LoanService - -> LoanRequestRepository
+LoanService - -> LoanRequestMapper
+LoanService ..> LoanRequest
+LoanService ..> Installment
+LoanService ..> CreateLoanRequestDTO
+LoanService ..> LoanResponseDTO
+LoanRequestController - -> LoanService
+LoanRequestController ..> CreateLoanRequestDTO
+LoanRequestController ..> LoanResponseDTO
+/'
+LoanRequestMapper ..> CreateLoanRequestDTO
+LoanRequestMapper ..> LoanResponseDTO
+LoanRequestMapper ..> Installment
+LoanRequestMapper ..> InstallmentDTO
+LoanRequestMapper ..> LoanRequest
+'/
+LoanResponseDTO *- - "many" InstallmentDTO
+LoanRequest *- - "many" Installment
+Installment - -> LoanRequest
+LoanRequestRepository -down-|> JpaRepository
+
+GlobalExceptionHandler ..> ErrorResponse
+@enduml
+
+@startuml
+skinparam BackgroundColor FFFFFF
+skinparam shadowing false
+skinparam RoundCorner 7
+skinparam ArrowColor 454645
+skinparam FontColor 454645
+skinparam SequenceLifeLineBorderColor 696969
+skinparam SequenceGroupHeaderFontColor 454645
+skinparam SequenceGroupFontColor 696969
+skinparam SequenceGroupBorderColor 696969
+skinparam SequenceGroupBorderThickness 1
+
+skinparam sequenceDivider {
+    BorderColor 454645
+    BorderThickness 1
+    FontColor 454645
+}
+
+skinparam participant {
+    BackgroundColor FF6347
+    BorderColor 454645
+    FontColor FFFFFF
+    BorderThickness 1.5
+}
+
+skinparam database {
+    BackgroundColor 00FFFF
+    BorderColor 454645
+    FontColor 454645
+}
+
+skinparam entity {
+    BackgroundColor FFE552
+    BorderColor 454645
+    FontColor 454645
+}
+
+skinparam note {
+    BackgroundColor 7FFFD4
+    BorderColor 454645
+    FontColor 454645
+    BorderThickness 1.5
+}
+
+skinparam actor {
+    BackgroundColor 454645
+    BorderColor 454645
+    FontColor 454645
+}
+
+skinparam boundary {
+    BackgroundColor FFE552
+    BorderColor 454645
+    FontColor 454645
+}
+
+skinparam control {
+    BackgroundColor FFE552
+    BorderColor 454645
+    FontColor 454645
+}
+
+skinparam collections {
+    BackgroundColor FF5F42
+    BorderColor 454645
+    FontColor 454645
+}
+
+skinparam queue {
+    BackgroundColor FF6347
+    BorderColor 454645
+    FontColor FFF
+    BorderThickness 1.5
+}
+skinparam classAttributeIconSize 0
+
+interface JpaRepository <<external>>
+
+
+class LoanService {
+    -LoanRequestRepositor
+    -LoanRequestMapper
+    +Page<LoanResponseDTO> getAllLoans(Pageable)
+    +LoanResponseDTO createLoan(CreateLoanRequestDTO)
+}
+
+class LoanRequestController {
+    -LoanService
+    +LoanResponseDTO createLoan(CreateLoanRequestDTO)
+    +Page<LoanResponseDTO> getAllLoans(Pageable)
+}
+
+interface LoanRequestRepository {
+}
+
+interface LoanRequestMapper {
+    +LoanRequest toEntity(CreateLoanRequestDTO)
+    +LoanResponseDTO toResponseDTO(LoanRequest)
+    +InstallmentDTO toInstallmentDTO(Installment)
+    +List<InstallmentDTO> toInstallmentDTOs(List<Installment>)
+    +List<LoanResponseDTO> toLoanResponseDTOs(List<LoanRequest>)
+}
+
+class CreateLoanRequestDTO {
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -int loanTerm
+}
+
+class LoanResponseDTO {
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -int loanTerm
+    -List<InstallmentDTO> installments
+    -LocalDateTime creationTimestamp
+}
+
+class InstallmentDTO {
+    -int month
+    -BigDecimal paymentAmount
+    -BigDecimal principalAmount
+    -BigDecimal interestAmount
+    -BigDecimal balanceOwed
+}
+
+class LoanRequest {
+    -Long id
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -Integer loanTerm
+    -List<Installment> installments
+    -LocalDateTime creationTimestamp
+}
+
+class Installment {
+    -Long id
+    -Integer month
+    -BigDecimal paymentAmount
+    -BigDecimal principalAmount
+    -BigDecimal interestAmount
+    -BigDecimal balanceOwed
+    -LoanRequest loanRequest
+}
+
+
+LoanService - -> LoanRequestRepository
+LoanService - -> LoanRequestMapper
+LoanService ..> LoanRequest
+LoanService ..> Installment
+LoanService ..> CreateLoanRequestDTO
+LoanService ..> LoanResponseDTO
+LoanRequestController - -> LoanService
+LoanRequestController ..> CreateLoanRequestDTO
+LoanRequestController ..> LoanResponseDTO
+LoanResponseDTO *- - "many" InstallmentDTO
+LoanRequest *- - "many" Installment
+Installment - -> LoanRequest
+LoanRequestRepository -down-|> JpaRepository
+
+GlobalExceptionHandler ..> ErrorResponse
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 17:01:30 UTC 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
