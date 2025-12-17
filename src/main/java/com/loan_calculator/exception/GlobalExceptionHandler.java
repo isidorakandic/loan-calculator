@@ -2,6 +2,7 @@ package com.loan_calculator.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -32,6 +33,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleJsonParseError(HttpMessageNotReadableException exception) {
         String message = "Malformed JSON or invalid parameter data type was sent.";
+        log.warn(message, exception);
+        return new ErrorResponse(List.of(message));
+    }
+
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handlePaginationError(InvalidDataAccessApiUsageException exception) {
+        String message = "Invalid pagination parameters were sent.";
         log.warn(message, exception);
         return new ErrorResponse(List.of(message));
     }
