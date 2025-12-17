@@ -15,6 +15,10 @@ retrieving their calculated monthly installments, persisting everything in MySQL
 
 ![class diagram](https://raw.githubusercontent.com/isidorakandic/loan-calculator/main/diagrams/class-diagram.svg)
 
+## UML sequence diagram
+
+![class diagram](https://raw.githubusercontent.com/isidorakandic/loan-calculator/main/diagrams/sequence-diagram.svg)
+
 ## Architecture
 
 The service follows a typical Spring layered architecture:

@@ -1,0 +1,16 @@
+@startuml
+!theme plain
+actor User
+participant LoanRequestController
+participant LoanService
+participant LoanRequestRepository
+
+User -> LoanRequestController : createLoan(createLoanRequestDTO)
+LoanRequestController -> LoanService : createLoan(createLoanRequestDTO)
+LoanService -> LoanService : prepareLoanRequest(createLoanRequestDTO)
+LoanService -> LoanService : calculateInstallments(loanRequest)
+LoanService -> LoanRequestRepository : save(loanRequest)
+LoanRequestRepository --> LoanService : savedLoanRequest
+LoanService --> LoanRequestController : LoanResponseDTO
+LoanRequestController --> User : LoanResponseDTO
+@enduml
