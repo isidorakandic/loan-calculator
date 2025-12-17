@@ -5,6 +5,8 @@ import com.loan_calculator.dto.LoanResponseDTO;
 import com.loan_calculator.service.LoanService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +26,8 @@ class LoanRequestController {
     }
 
     @GetMapping("/loans")
-    public List<LoanResponseDTO> getAllLoans() {
-        return loanService.getAllLoans();
+    public Page<LoanResponseDTO> getAllLoans(Pageable pageable) {
+        return loanService.getAllLoans(pageable);
     }
 
 }
