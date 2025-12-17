@@ -40,6 +40,12 @@ public class LoanService {
         return loanRequestMapper.toResponseDTO(createLoanRequest);
     }
 
+    // Retrieves all stored loans and maps them to API-facing DTOs for the GET /loans endpoint
+    public List<LoanResponseDTO> getAllLoans() {
+        List<LoanRequest> savedLoans = loanRequestRepository.findAll();
+        return loanRequestMapper.toLoanResponseDTOs(savedLoans);
+    }
+
     protected List<Installment> calculateInstallments(LoanRequest loanRequest) {
         BigDecimal principal = loanRequest.getLoanAmount();
         BigDecimal interestRate = loanRequest.getInterestRate();
