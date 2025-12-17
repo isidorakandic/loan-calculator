@@ -1,14 +1,26 @@
 package com.loan_calculator;
 
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.loan_calculator.dto.CreateLoanRequestDTO;
+import com.loan_calculator.dto.InstallmentDTO;
+import com.loan_calculator.dto.LoanResponseDTO;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 // Bootstraps the full application context and runs the server on a random port for end-to-end testing.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -22,69 +34,80 @@ class LoanCalculatorIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    // Marks this method as a JUnit 5 test case that verifies loan requests are persisted and schedules are returned.
+    JsonMapper objectMapper = JsonMapper.builder().build();
+
     @Test
-    void postLoansPersistsAndReturnsAmortizationSchedule() {
-        // TODO: Implement integration test for POST /loans once API contract is finalized.
-        Map<String, Object> requestPayload = Map.of(
-                "loanAmount", 10_000,
-                "interestRate", 5.3,
-                "loanTerm", 5
+    void postLoansPersistsAndReturnsAmortizationSchedule() throws UnsupportedEncodingException {
+
+        CreateLoanRequestDTO requestPayload = setupLoanRequest();
+        List<InstallmentDTO> expectedInstallments = setUpInstallments();
+
+        // Performs the POST request to /loan with the request DTO serialized as JSON and asserts an OK status.
+        MvcResult mvcResult = Assertions.assertDoesNotThrow(() -> mockMvc.perform( // Executes the request and fails the test if serialization or MVC throws.
+                        org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/loan") // Configures a POST to the /loan endpoint.
+                                .contentType(MediaType.APPLICATION_JSON) // Sends JSON so the controller binds to CreateLoanRequestDTO.
+                                .content(objectMapper.writeValueAsString(requestPayload))) // Serializes the request DTO into the HTTP body.
+                .andExpect(MockMvcResultMatchers.status().isOk()) // Asserts the endpoint responds with HTTP 200 OK.
+                .andReturn()); // Captures the full MVC result for response body inspection.
+
+        // Extracts the raw JSON response body for further inspection.
+        String responseBody = mvcResult.getResponse().getContentAsString();
+        // Deserializes the response into a strongly typed DTO to improve field-level validation and readability.
+        LoanResponseDTO actualResponse = Assertions.assertDoesNotThrow(
+                () -> objectMapper.readValue(responseBody, LoanResponseDTO.class)
         );
 
-        // Constructs the expected list of amortization installments returned by the API for the supplied input.
-        List<Map<String, Object>> expectedInstallments = setUpInstallments();
+        Assertions.assertEquals(BigDecimal.valueOf(10000), actualResponse.getLoanAmount());
+        Assertions.assertEquals(5, actualResponse.getLoanTerm());
+        Assertions.assertEquals(BigDecimal.valueOf(5.3), actualResponse.getInterestRate());
+        assertCreationTimestampFormat(actualResponse.getCreationTimestamp());
 
-        // Wraps the full expected response payload including timestamp, installments, and original loan details.
-        Map<String, Object> expectedResponseBody = Map.of(
-                "creationTimestamp", "17 December 2025 01:27",
-                "installments", expectedInstallments,
-                "interestRate", 5.3,
-                "loanAmount", 10000,
-                "loanTerm", 5
-        );
-
-        // TODO: Use MockMvc to POST the requestPayload and verify the response matches expectedResponseBody.
+        List<InstallmentDTO> actualInstallments = actualResponse.getInstallments();
+        assertInstallments(expectedInstallments, actualInstallments);
     }
 
-    private List<Map<String, Object>> setUpInstallments() {
-        List<Map<String, Object>> expectedInstallments = List.of(
-                Map.of(
-                        "balanceOwed", 8017.59,
-                        "interestAmount", 44.17,
-                        "month", 1,
-                        "paymentAmount", 2026.58,
-                        "principalAmount", 1982.41
-                ),
-                Map.of(
-                        "balanceOwed", 6026.42,
-                        "interestAmount", 35.41,
-                        "month", 2,
-                        "paymentAmount", 2026.58,
-                        "principalAmount", 1991.17
-                ),
-                Map.of(
-                        "balanceOwed", 4026.46,
-                        "interestAmount", 26.62,
-                        "month", 3,
-                        "paymentAmount", 2026.58,
-                        "principalAmount", 1999.96
-                ),
-                Map.of(
-                        "balanceOwed", 2017.66,
-                        "interestAmount", 17.78,
-                        "month", 4,
-                        "paymentAmount", 2026.58,
-                        "principalAmount", 2008.80
-                ),
-                Map.of(
-                        "balanceOwed", 0,
-                        "interestAmount", 8.91,
-                        "month", 5,
-                        "paymentAmount", 2026.57,
-                        "principalAmount", 2017.66
-                )
+    private CreateLoanRequestDTO setupLoanRequest() {
+        CreateLoanRequestDTO createLoanRequestDTO = new CreateLoanRequestDTO();
+        createLoanRequestDTO.setLoanAmount(BigDecimal.valueOf(10_000));
+        createLoanRequestDTO.setInterestRate(BigDecimal.valueOf(5.3));
+        createLoanRequestDTO.setLoanTerm(5);
+        return createLoanRequestDTO;
+    }
+
+    private List<InstallmentDTO> setUpInstallments() {
+        return List.of(
+                buildInstallment(1, 2026.58, 1982.41, 44.17, 8017.59),
+                buildInstallment(2, 2026.58, 1991.17, 35.41, 6026.42),
+                buildInstallment(3, 2026.58, 1999.96, 26.62, 4026.46),
+                buildInstallment(4, 2026.58, 2008.80, 17.78, 2017.66),
+                buildInstallment(5, 2026.57, 2017.66, 8.91, 0)
         );
-        return expectedInstallments;
+    }
+
+    private InstallmentDTO buildInstallment(int month, double paymentAmount, double principalAmount,
+                                            double interestAmount, double balanceOwed) {
+        InstallmentDTO installmentDTO = new InstallmentDTO();
+        installmentDTO.setMonth(month);
+        installmentDTO.setPaymentAmount(BigDecimal.valueOf(paymentAmount));
+        installmentDTO.setPrincipalAmount(BigDecimal.valueOf(principalAmount));
+        installmentDTO.setInterestAmount(BigDecimal.valueOf(interestAmount));
+        installmentDTO.setBalanceOwed(BigDecimal.valueOf(balanceOwed));
+        return installmentDTO;
+    }
+
+    private void assertInstallments(List<InstallmentDTO> expectedInstallments,
+                                    List<InstallmentDTO> actualInstallments) {
+
+        Assertions.assertNotNull(actualInstallments, "Installments should be returned in the response");
+        Assertions.assertEquals(expectedInstallments, actualInstallments,
+                "Installments should match");
+    }
+
+    private void assertCreationTimestampFormat(LocalDateTime creationTimestamp) {
+        Assertions.assertNotNull(creationTimestamp, "creationTimestamp should be present");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm", Locale.ENGLISH);
+        String creationTimestampString = creationTimestamp.format(formatter);
+        Assertions.assertDoesNotThrow(() -> LocalDateTime.parse(creationTimestampString, formatter),
+                "creationTimestamp should match format 'dd MMMM yyyy HH:mm'");
     }
 }
