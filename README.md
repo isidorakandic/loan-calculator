@@ -72,7 +72,7 @@ The service follows a typical Spring layered architecture:
 - Health check: `http://localhost:8088/actuator/health`
 - Loans API: `http://localhost:8088/loans`
 
-### Logs
+## Logs
 
 Application logs are written to `logs/loan-calculator.log` inside the container.
 
