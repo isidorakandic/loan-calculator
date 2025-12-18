@@ -1,0 +1,118 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+interface JpaRepository <<external>>
+
+class LoanCalculatorApplication {
+    ~static void main(String[] args)
+}
+
+class LoanService {
+    -static final RoundingMode ROUNDING
+    -static final MathContext MC
+    -static final int MONEY_SCALE
+    -final LoanRequestRepository loanRequestRepository
+    -final LoanRequestMapper loanRequestMapper
+    +Page<LoanResponseDTO> getAllLoans(Pageable pageable)
+    +LoanResponseDTO createLoan(CreateLoanRequestDTO createLoanRequestDTO)
+    ~List<Installment> calculateInstallments(LoanRequest loanRequest)
+    -BigDecimal calculateMonthlyPayment(BigDecimal principal, BigDecimal monthlyInterest, int term)
+    -BigDecimal calculateMonthlyInterest(BigDecimal interestRate)
+}
+
+class LoanRequestController {
+    -final LoanService loanService
+    +LoanResponseDTO createLoan(CreateLoanRequestDTO createLoanRequestDTO)
+    +Page<LoanResponseDTO> getAllLoans(Pageable pageable)
+}
+
+interface LoanRequestRepository {
+}
+
+LoanRequestRepository -|> JpaRepository
+
+interface LoanRequestMapper {
+    +LoanRequest toEntity(CreateLoanRequestDTO createLoanRequestDTO)
+    +LoanResponseDTO toResponseDTO(LoanRequest loanRequest)
+    +InstallmentDTO toInstallmentDTO(Installment installment)
+    +List<InstallmentDTO> toInstallmentDTOs(List<Installment> installments)
+    +List<LoanResponseDTO> toLoanResponseDTOs(List<LoanRequest> loanRequests)
+}
+
+class CreateLoanRequestDTO {
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -int loanTerm
+}
+
+class LoanResponseDTO {
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -int loanTerm
+    -List<InstallmentDTO> installments
+    -LocalDateTime creationTimestamp
+}
+
+class InstallmentDTO {
+    -int month
+    -BigDecimal paymentAmount
+    -BigDecimal principalAmount
+    -BigDecimal interestAmount
+    -BigDecimal balanceOwed
+}
+
+class LoanRequest {
+    -Long id
+    -BigDecimal loanAmount
+    -BigDecimal interestRate
+    -Integer loanTerm
+    -List<Installment> installments
+    -LocalDateTime creationTimestamp
+}
+
+class Installment {
+    -Long id
+    -Integer month
+    -BigDecimal paymentAmount
+    -BigDecimal principalAmount
+    -BigDecimal interestAmount
+    -BigDecimal balanceOwed
+    -LoanRequest loanRequest
+}
+
+class GlobalExceptionHandler {
+    -static final Logger log
+    +ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException exception)
+    +ErrorResponse handleJsonParseError(HttpMessageNotReadableException exception)
+    +ErrorResponse handlePaginationError(InvalidDataAccessApiUsageException exception)
+    +ErrorResponse handleNoResourceError(NoResourceFoundException exception)
+    +ErrorResponse handleUnexpected(Exception exception)
+    -static List<String> extractMessages(MethodArgumentNotValidException exception)
+}
+
+class ErrorResponse {
+    -List<String> errors
+}
+
+LoanService --> LoanRequestRepository
+LoanService --> LoanRequestMapper
+LoanService ..> LoanRequest
+LoanService ..> Installment
+LoanService ..> CreateLoanRequestDTO
+LoanService ..> LoanResponseDTO
+LoanRequestController --> LoanService
+LoanRequestController ..> CreateLoanRequestDTO
+LoanRequestController ..> LoanResponseDTO
+LoanRequestMapper ..> CreateLoanRequestDTO
+LoanRequestMapper ..> LoanResponseDTO
+LoanRequestMapper ..> Installment
+LoanRequestMapper ..> InstallmentDTO
+LoanRequestMapper ..> LoanRequest
+LoanResponseDTO *-- "many" InstallmentDTO
+LoanRequest *-- "many" Installment
+Installment --> LoanRequest
+GlobalExceptionHandler ..> ErrorResponse
+LoanCalculatorApplication ..> LoanService
+
+@enduml
