@@ -1,6 +1,7 @@
 package com.loan_calculator.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.loan_calculator.entity.LoanStatus;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,8 @@ public class LoanResponseDTO {
     private BigDecimal interestRate;
 
     private int loanTerm;
+
+    private LoanStatus status;
 
     private List<InstallmentDTO> installments = new ArrayList<>();
 

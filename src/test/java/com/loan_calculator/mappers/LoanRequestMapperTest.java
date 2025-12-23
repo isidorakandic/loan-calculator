@@ -5,6 +5,7 @@ import com.loan_calculator.dto.InstallmentDTO;
 import com.loan_calculator.dto.LoanResponseDTO;
 import com.loan_calculator.entity.Installment;
 import com.loan_calculator.entity.LoanRequest;
+import com.loan_calculator.entity.LoanStatus;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -75,6 +76,7 @@ class LoanRequestMapperTest {
         loanResponseDTO.setLoanAmount(new BigDecimal("4500"));
         loanResponseDTO.setInterestRate(new BigDecimal("2.5"));
         loanResponseDTO.setLoanTerm(3);
+        loanResponseDTO.setStatus(LoanStatus.CREATED);
         loanResponseDTO.setCreationTimestamp(timestamp);
         loanResponseDTO.setInstallments(generateInstallmentDTOlist());
         return loanResponseDTO;
@@ -95,6 +97,7 @@ class LoanRequestMapperTest {
         loanRequest.setLoanAmount(new BigDecimal("4500"));
         loanRequest.setInterestRate(new BigDecimal("2.5"));
         loanRequest.setLoanTerm(3);
+        loanRequest.setStatus(LoanStatus.CREATED);
         loanRequest.setCreationTimestamp(timestamp);
         loanRequest.setInstallments(generateInstallmentList());
         return loanRequest;
@@ -142,6 +145,7 @@ class LoanRequestMapperTest {
         first.setLoanAmount(new BigDecimal("5000"));
         first.setInterestRate(new BigDecimal("4.5"));
         first.setLoanTerm(12);
+        first.setStatus(LoanStatus.CREATED);
         first.setCreationTimestamp(timestamp);
         first.setInstallments(generateInstallmentList());
 
@@ -149,6 +153,7 @@ class LoanRequestMapperTest {
         second.setLoanAmount(new BigDecimal("8000"));
         second.setInterestRate(new BigDecimal("6.0"));
         second.setLoanTerm(24);
+        second.setStatus(LoanStatus.CREATED);
         second.setCreationTimestamp(timestamp);
         second.setInstallments(generateInstallmentList());
 
@@ -161,6 +166,7 @@ class LoanRequestMapperTest {
         first.setLoanAmount(new BigDecimal("5000"));
         first.setInterestRate(new BigDecimal("4.5"));
         first.setLoanTerm(12);
+        first.setStatus(LoanStatus.CREATED);
         first.setCreationTimestamp(timestamp);
         first.setInstallments(generateInstallmentDTOlist());
 
@@ -168,6 +174,7 @@ class LoanRequestMapperTest {
         second.setLoanAmount(new BigDecimal("8000"));
         second.setInterestRate(new BigDecimal("6.0"));
         second.setLoanTerm(24);
+        second.setStatus(LoanStatus.CREATED);
         second.setCreationTimestamp(timestamp);
         second.setInstallments(generateInstallmentDTOlist());
 
@@ -202,6 +209,7 @@ class LoanRequestMapperTest {
         assertThat(expected.getLoanAmount()).isEqualTo(actual.getLoanAmount());
         assertThat(expected.getInterestRate()).isEqualTo(actual.getInterestRate());
         assertThat(expected.getCreationTimestamp()).isEqualTo(actual.getCreationTimestamp());
+        assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
         validateInstallmentDtoList(expected.getInstallments(), actual.getInstallments());
     }
 }

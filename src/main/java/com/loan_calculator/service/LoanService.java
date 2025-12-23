@@ -4,9 +4,11 @@ import com.loan_calculator.dto.CreateLoanRequestDTO;
 import com.loan_calculator.dto.LoanResponseDTO;
 import com.loan_calculator.entity.Installment;
 import com.loan_calculator.entity.LoanRequest;
+import com.loan_calculator.entity.LoanStatus;
 import com.loan_calculator.mappers.LoanRequestMapper;
 import com.loan_calculator.repository.LoanRequestRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor // for dependency injection for loanRequestRepository and loanRequestMapper
@@ -33,14 +36,34 @@ public class LoanService {
 
     public LoanResponseDTO createLoan(CreateLoanRequestDTO createLoanRequestDTO) {
 
+        Optional<LoanRequest> existingLoanRequest = findExistingLoanRequest(createLoanRequestDTO);
+
+        if (existingLoanRequest.isPresent()) {
+            return loanRequestMapper.toResponseDTO(existingLoanRequest.get());
+        }
+
         LoanRequest loanRequest = loanRequestMapper.toEntity(createLoanRequestDTO);
+        loanRequest.setStatus(LoanStatus.CREATED);
 
         List<Installment> installments = calculateInstallments(loanRequest);
-
         loanRequest.setInstallments(installments);
-        loanRequest = loanRequestRepository.save(loanRequest);
+
+        try {
+            loanRequest = loanRequestRepository.saveAndFlush(loanRequest);
+        } catch (DataIntegrityViolationException exception) {
+            LoanRequest persistedLoan = findExistingLoanRequest(createLoanRequestDTO)
+                    .orElseThrow(() -> exception);
+            return loanRequestMapper.toResponseDTO(persistedLoan);
+        }
 
         return loanRequestMapper.toResponseDTO(loanRequest);
+    }
+
+    private Optional<LoanRequest> findExistingLoanRequest(CreateLoanRequestDTO createLoanRequestDTO) {
+        return loanRequestRepository.findByLoanAmountAndInterestRateAndLoanTerm(
+                createLoanRequestDTO.getLoanAmount(),
+                createLoanRequestDTO.getInterestRate(),
+                createLoanRequestDTO.getLoanTerm());
     }
 
     List<Installment> calculateInstallments(LoanRequest loanRequest) {
