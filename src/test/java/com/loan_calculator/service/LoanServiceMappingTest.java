@@ -13,11 +13,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -32,9 +32,11 @@ class LoanServiceMappingTest {
     @Mock
     private LoanRequestMapper loanRequestMapper;
 
-    @Spy
-    @InjectMocks
+    @Mock
     private LoanService loanService;
+
+    @InjectMocks
+    private LoanRequestService loanRequestService;
 
     CreateLoanRequestDTO requestDTO;
     LoanRequest loanRequest;
@@ -52,7 +54,7 @@ class LoanServiceMappingTest {
         installments = List.of(installment1, installment2);
 
         when(loanRequestMapper.toEntity(requestDTO)).thenReturn(loanRequest);
-        doReturn(installments).when(loanService).calculateInstallments(loanRequest);
+        when(loanService.calculate(loanRequest)).thenReturn(CompletableFuture.completedFuture(new LoanCalculationResult(installments)));
         when(loanRequestRepository.findByLoanAmountAndInterestRateAndLoanTerm(any(), any(), any()))
                 .thenReturn(Optional.empty());
 
@@ -62,11 +64,11 @@ class LoanServiceMappingTest {
 
     @Test
     void createLoan_shouldCallAllCollaboratorsAndReturnResponse() {
-        LoanResponseDTO result = loanService.createLoan(requestDTO);
+        LoanResponseDTO result = loanRequestService.createLoan(requestDTO);
 
         assertThat(result).isSameAs(responseDTO);
         verify(loanRequestMapper).toEntity(requestDTO);
-        verify(loanService).calculateInstallments(loanRequest);
+        verify(loanService).calculate(loanRequest);
         verify(loanRequestRepository).saveAndFlush(loanRequest);
         verify(loanRequestMapper).toResponseDTO(loanRequest);
 
@@ -74,7 +76,7 @@ class LoanServiceMappingTest {
 
     @Test
     void createLoan_shouldAttachLoanRequestToInstallments_beforeSaving() {
-        loanService.createLoan(requestDTO);
+        loanRequestService.createLoan(requestDTO);
 
         ArgumentCaptor<LoanRequest> captor = ArgumentCaptor.forClass(LoanRequest.class);
         verify(loanRequestRepository).saveAndFlush(captor.capture());
@@ -86,7 +88,7 @@ class LoanServiceMappingTest {
 
     @Test
     void createLoan_shouldSetStatusToCreatedBeforeSaving() {
-        loanService.createLoan(requestDTO);
+        loanRequestService.createLoan(requestDTO);
 
         ArgumentCaptor<LoanRequest> captor = ArgumentCaptor.forClass(LoanRequest.class);
         verify(loanRequestRepository).saveAndFlush(captor.capture());
@@ -101,13 +103,13 @@ class LoanServiceMappingTest {
                 .thenReturn(Optional.of(existingLoanRequest));
         when(loanRequestMapper.toResponseDTO(existingLoanRequest)).thenReturn(responseDTO);
 
-        LoanResponseDTO result = loanService.createLoan(requestDTO);
+        LoanResponseDTO result = loanRequestService.createLoan(requestDTO);
 
         assertThat(result).isSameAs(responseDTO);
         verify(loanRequestRepository, never()).saveAndFlush(any());
         verify(loanRequestRepository, never()).save(any());
         verify(loanRequestMapper, never()).toEntity(any());
-        verify(loanService, never()).calculateInstallments(any());
+        verify(loanService, never()).calculate(any());
     }
 
 }

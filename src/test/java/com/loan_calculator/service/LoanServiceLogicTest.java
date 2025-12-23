@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LoanServiceLogicTest {
 
-    private final LoanService loanService = new LoanService(null, null);
+    private final LoanServiceImpl loanService = new LoanServiceImpl();
 
     @Test
     void calculateInstallments_zeroInterestRate() {
