@@ -16,6 +16,7 @@ public interface LoanRequestMapper {
 
     @Mapping(target = "installments", ignore = true)
     @Mapping(target = "creationTimestamp", ignore = true)
+    @Mapping(target = "status", ignore = true)
     LoanRequest toEntity(CreateLoanRequestDTO createLoanRequestDTO);
 
     LoanResponseDTO toResponseDTO(LoanRequest loanRequest);
