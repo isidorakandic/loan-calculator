@@ -2,8 +2,9 @@ package com.loan_calculator.service;
 
 import com.loan_calculator.entity.Installment;
 import com.loan_calculator.entity.LoanRequest;
+import lombok.SneakyThrows;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -12,19 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@Service("loanServiceImpl")
-public class LoanServiceImpl implements LoanService {
+@Component
+public class LoanCalculationImpl implements LoanCalculation {
 
     private static final RoundingMode ROUNDING = RoundingMode.HALF_EVEN; // banker's rounding
     private static final MathContext MC = new MathContext(20, ROUNDING);
     private static final int MONEY_SCALE = 2;
 
-    @Override
+    @SneakyThrows
     @Async
-    public CompletableFuture<LoanCalculationResult> calculate(LoanRequest loanRequest) {
-        List<Installment> installments = calculateInstallments(loanRequest);
-        simulateLongRunningOperation();
-        return CompletableFuture.completedFuture(new LoanCalculationResult(installments));
+    public CompletableFuture<List<Installment>> async_calculateInstallments(LoanRequest loanRequest) {
+        Thread.sleep(10000);
+        return CompletableFuture.completedFuture(calculateInstallments(loanRequest));
     }
 
     List<Installment> calculateInstallments(LoanRequest loanRequest) {
@@ -73,13 +73,5 @@ public class LoanServiceImpl implements LoanService {
         BigDecimal hundred = BigDecimal.valueOf(100);
         BigDecimal twelve = BigDecimal.valueOf(12);
         return interestRate.divide(hundred, MC).divide(twelve, MC);
-    }
-
-    private void simulateLongRunningOperation() {
-        try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
     }
 }

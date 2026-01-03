@@ -2,7 +2,7 @@ package com.loan_calculator.controller;
 
 import com.loan_calculator.dto.CreateLoanRequestDTO;
 import com.loan_calculator.dto.LoanResponseDTO;
-import com.loan_calculator.service.LoanRequestService;
+import com.loan_calculator.service.LoanService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor // needed for dependency injection for loanService
 class LoanRequestController {
 
-    private final LoanRequestService loanService;
+    private final LoanService loanService;
 
     @PostMapping("/loans")
     public LoanResponseDTO createLoan(@Valid @RequestBody CreateLoanRequestDTO createLoanRequestDTO) {

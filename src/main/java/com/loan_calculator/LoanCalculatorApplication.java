@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 public class LoanCalculatorApplication {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(LoanCalculatorApplication.class, args);
     }
 

@@ -9,9 +9,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LoanServiceLogicTest {
+class LoanCalculationTest {
 
-    private final LoanServiceImpl loanService = new LoanServiceImpl();
+    private final LoanCalculationImpl loanCalculation = new LoanCalculationImpl();
 
     @Test
     void calculateInstallments_zeroInterestRate() {
@@ -26,7 +26,7 @@ class LoanServiceLogicTest {
                 new Installment(3, new BigDecimal("400.00"), new BigDecimal("400.00"), BigDecimal.ZERO, BigDecimal.ZERO)
         );
 
-        List<Installment> actualInstallments = loanService.calculateInstallments(loanRequest);
+        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
         assertInstallmentsMatchExpected(actualInstallments, expectedInstallments);
     }
 
@@ -42,7 +42,7 @@ class LoanServiceLogicTest {
         );
 
 
-        List<Installment> actualInstallments = loanService.calculateInstallments(loanRequest);
+        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
         assertInstallmentsMatchExpected(actualInstallments, expectedInstallments);
     }
 
@@ -69,7 +69,7 @@ class LoanServiceLogicTest {
                 new Installment(12, new BigDecimal("865.25"), new BigDecimal("860.23"), new BigDecimal("5.02"), BigDecimal.ZERO)
         );
 
-        List<Installment> actualInstallments = loanService.calculateInstallments(loanRequest);
+        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
         assertInstallmentsMatchExpected(actualInstallments, expectedInstallments);
     }
 
@@ -80,7 +80,7 @@ class LoanServiceLogicTest {
         loanRequest.setInterestRate(new BigDecimal("35.8"));
         loanRequest.setLoanTerm(360);
 
-        List<Installment> actualInstallments = loanService.calculateInstallments(loanRequest);
+        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
 
         // Ensure total number of installments is correct
         assertThat(actualInstallments).hasSize(360);
@@ -114,7 +114,7 @@ class LoanServiceLogicTest {
                 new Installment(5, new BigDecimal("196425605.36"), new BigDecimal("190735334.55"), new BigDecimal("5690270.81"), BigDecimal.ZERO)
         );
 
-        List<Installment> actualInstallments = loanService.calculateInstallments(loanRequest);
+        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
         assertInstallmentsMatchExpected(actualInstallments, expectedInstallments);
     }
 
@@ -125,7 +125,7 @@ class LoanServiceLogicTest {
         loanRequest.setInterestRate(new BigDecimal("0.01"));
         loanRequest.setLoanTerm(30);
 
-        List<Installment> actualInstallments = loanService.calculateInstallments(loanRequest);
+        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
 
         assertThat(actualInstallments).hasSize(30);
 
