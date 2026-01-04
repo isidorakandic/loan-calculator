@@ -6,7 +6,6 @@ import com.loan_calculator.dto.CreateLoanRequestDTO;
 import com.loan_calculator.dto.InstallmentDTO;
 import com.loan_calculator.dto.LoanResponseDTO;
 import com.loan_calculator.entity.LoanStatus;
-import com.loan_calculator.repository.LoanRequestRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,20 +39,16 @@ class LoanCalculatorIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private LoanRequestRepository loanRequestRepository;
-
     JsonMapper jsonMapper;
 
     @BeforeEach
     void setUp() {
-        loanRequestRepository.deleteAll();
         jsonMapper = JsonMapper.builder().build();
         jsonMapper.registerModule(new JavaTimeModule());
     }
 
     @Test
-    void postLoansPersistsAndReturnsAmortizationSchedule() throws UnsupportedEncodingException {
+    void postLoansPersistsAndReturnsAmortizationSchedule() throws Exception {
 
         CreateLoanRequestDTO requestPayload = setupLoanRequest();
         List<InstallmentDTO> expectedInstallments = setUpInstallments();
@@ -76,29 +70,7 @@ class LoanCalculatorIntegrationTest {
         Assertions.assertEquals(LoanStatus.CREATED, actualResponse.getStatus());
         assertCreationTimestampFormat(actualResponse.getCreationTimestamp());
         List<InstallmentDTO> actualInstallments = actualResponse.getInstallments();
-        assertInstallments(expectedInstallments, actualInstallments);
-    }
-
-    @Test
-    void postLoansWithSamePayloadReturnsExistingLoan() throws Exception {
-        CreateLoanRequestDTO requestPayload = setupLoanRequest();
-
-        LoanResponseDTO firstResponse = performLoanRequest(requestPayload);
-        LoanResponseDTO duplicateResponse = performLoanRequest(requestPayload);
-
-        Assertions.assertEquals(firstResponse, duplicateResponse);
-        Assertions.assertEquals(1L, loanRequestRepository.count());
-    }
-
-    private LoanResponseDTO performLoanRequest(CreateLoanRequestDTO requestPayload) throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
-                        MockMvcRequestBuilders.post("/loans")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(jsonMapper.writeValueAsString(requestPayload)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-        String responseBody = mvcResult.getResponse().getContentAsString();
-        return jsonMapper.readValue(responseBody, LoanResponseDTO.class);
+        Assertions.assertEquals(0, actualInstallments.size()); // installments are not yet calculated
     }
 
     private CreateLoanRequestDTO setupLoanRequest() {

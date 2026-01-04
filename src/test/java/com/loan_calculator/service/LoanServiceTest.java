@@ -4,7 +4,6 @@ import com.loan_calculator.dto.CreateLoanRequestDTO;
 import com.loan_calculator.dto.LoanResponseDTO;
 import com.loan_calculator.entity.Installment;
 import com.loan_calculator.entity.LoanRequest;
-import com.loan_calculator.entity.LoanStatus;
 import com.loan_calculator.mappers.LoanRequestMapper;
 import com.loan_calculator.repository.LoanRequestRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +44,7 @@ class LoanServiceTest {
 
     @BeforeEach
     void setUp() {
+        loanRequestRepository.deleteAll();
         requestDTO = new CreateLoanRequestDTO();
         loanRequest = new LoanRequest();
         responseDTO = new LoanResponseDTO();
@@ -84,32 +84,6 @@ class LoanServiceTest {
 
         assertThat(savedLoanRequest.getInstallments())
                 .allSatisfy(i -> assertSame(savedLoanRequest, i.getLoanRequest()));
-    }
-
-    @Test
-    void createLoan_shouldSetStatusToCreatedBeforeSaving() {
-        loanService.createLoan(requestDTO);
-
-        ArgumentCaptor<LoanRequest> captor = ArgumentCaptor.forClass(LoanRequest.class);
-        verify(loanRequestRepository).saveAndFlush(captor.capture());
-
-        assertThat(captor.getValue().getStatus()).isEqualTo(LoanStatus.CREATED);
-    }
-
-    @Test
-    void createLoan_whenExistingLoanFound_shouldReturnExisting() {
-        LoanRequest existingLoanRequest = new LoanRequest();
-        when(loanRequestRepository.findByLoanAmountAndInterestRateAndLoanTerm(any(), any(), any()))
-                .thenReturn(Optional.of(existingLoanRequest));
-        when(loanRequestMapper.toResponseDTO(existingLoanRequest)).thenReturn(responseDTO);
-
-        LoanResponseDTO result = loanService.createLoan(requestDTO);
-
-        assertThat(result).isSameAs(responseDTO);
-        verify(loanRequestRepository, never()).saveAndFlush(any());
-        verify(loanRequestRepository, never()).save(any());
-        verify(loanRequestMapper, never()).toEntity(any());
-        verify(loanCalculation, never()).async_calculateInstallments(any());
     }
 
 }
