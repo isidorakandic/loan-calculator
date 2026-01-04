@@ -2,10 +2,13 @@ package com.loan_calculator.service;
 
 import com.loan_calculator.entity.Installment;
 import com.loan_calculator.entity.LoanRequest;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,8 +16,21 @@ class LoanCalculationTest {
 
     private final LoanCalculationImpl loanCalculation = new LoanCalculationImpl();
 
-    @Test
-    void calculateInstallments_zeroInterestRate() {
+    @ParameterizedTest
+    @MethodSource("args_zeroInterestRate")
+    @MethodSource("args_singleMonthLoan")
+    @MethodSource("args_lastPaymentAdjusted")
+    @MethodSource("args_longTermLoan")
+    @MethodSource("args_bigLoanAmount")
+    @MethodSource("args_tinyLoanAmount")
+    void calculateInstallments(LoanRequest loanRequest, List<Installment> expectedInstallments) {
+        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
+        List<Installment> actualInstallmentToBeChecked =
+                actualInstallments.subList(actualInstallments.size() - expectedInstallments.size(), actualInstallments.size());
+        assertInstallmentsMatchExpected(actualInstallmentToBeChecked, expectedInstallments);
+    }
+
+    private static Stream<Arguments> args_zeroInterestRate() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("1200"));
         loanRequest.setInterestRate(BigDecimal.ZERO);
@@ -26,12 +42,10 @@ class LoanCalculationTest {
                 new Installment(3, new BigDecimal("400.00"), new BigDecimal("400.00"), BigDecimal.ZERO, BigDecimal.ZERO)
         );
 
-        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
-        assertInstallmentsMatchExpected(actualInstallments, expectedInstallments);
+        return Stream.of(Arguments.of(loanRequest, expectedInstallments));
     }
 
-    @Test
-    void calculateInstallments_singleMonthLoan() {
+    private static Stream<Arguments> args_singleMonthLoan() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("500"));
         loanRequest.setInterestRate(new BigDecimal("12"));
@@ -41,13 +55,10 @@ class LoanCalculationTest {
                 new Installment(1, new BigDecimal("505"), new BigDecimal("500"), new BigDecimal("5"), BigDecimal.ZERO)
         );
 
-
-        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
-        assertInstallmentsMatchExpected(actualInstallments, expectedInstallments);
+        return Stream.of(Arguments.of(loanRequest, expectedInstallments));
     }
 
-    @Test
-    void calculateInstallments_lastPaymentAdjusted() {
+    private static Stream<Arguments> args_lastPaymentAdjusted() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("10000")); // principal amount
         loanRequest.setInterestRate(new BigDecimal("7"));   // annual interest rate
@@ -69,21 +80,14 @@ class LoanCalculationTest {
                 new Installment(12, new BigDecimal("865.25"), new BigDecimal("860.23"), new BigDecimal("5.02"), BigDecimal.ZERO)
         );
 
-        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
-        assertInstallmentsMatchExpected(actualInstallments, expectedInstallments);
+        return Stream.of(Arguments.of(loanRequest, expectedInstallments));
     }
 
-    @Test
-    void calculateInstallments_longTermLoan() {
+    private static Stream<Arguments> args_longTermLoan() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("99000000"));
         loanRequest.setInterestRate(new BigDecimal("35.8"));
         loanRequest.setLoanTerm(360);
-
-        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
-
-        // Ensure total number of installments is correct
-        assertThat(actualInstallments).hasSize(360);
 
         List<Installment> expectedLastInstallments = List.of(
                 new Installment(358, new BigDecimal("2953574.86"), new BigDecimal("2704238.93"), new BigDecimal("249335.93"), new BigDecimal("5653389.92")),
@@ -91,16 +95,10 @@ class LoanCalculationTest {
                 new Installment(360, new BigDecimal("2954050.69"), new BigDecimal("2868474.53"), new BigDecimal("85576.16"), BigDecimal.ZERO)
         );
 
-        // Compare only the last 3 installments
-        assertInstallmentsMatchExpected(
-                actualInstallments.subList(357, 360),
-                expectedLastInstallments
-        );
+        return Stream.of(Arguments.of(loanRequest, expectedLastInstallments));
     }
 
-
-    @Test
-    void calculateInstallments_bigLoanAmount() {
+    private static Stream<Arguments> args_bigLoanAmount() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("900000000"));
         loanRequest.setInterestRate(new BigDecimal("35.8"));
@@ -114,38 +112,29 @@ class LoanCalculationTest {
                 new Installment(5, new BigDecimal("196425605.36"), new BigDecimal("190735334.55"), new BigDecimal("5690270.81"), BigDecimal.ZERO)
         );
 
-        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
-        assertInstallmentsMatchExpected(actualInstallments, expectedInstallments);
+        return Stream.of(Arguments.of(loanRequest, expectedInstallments));
     }
 
-    @Test
-    void calculateInstallments_tinyLoanAmount() {
+    private static Stream<Arguments> args_tinyLoanAmount() {
         LoanRequest loanRequest = new LoanRequest();
         loanRequest.setLoanAmount(new BigDecimal("1"));
         loanRequest.setInterestRate(new BigDecimal("0.01"));
         loanRequest.setLoanTerm(30);
 
-        List<Installment> actualInstallments = loanCalculation.calculateInstallments(loanRequest);
-
-        assertThat(actualInstallments).hasSize(30);
-
-        List<Installment> expectedFirstInstallments = List.of(
+        List<Installment> expectedInstallments = List.of(
                 new Installment(28, new BigDecimal("0.03"), new BigDecimal("0.03"), BigDecimal.ZERO, new BigDecimal("0.16")),
                 new Installment(29, new BigDecimal("0.03"), new BigDecimal("0.03"), BigDecimal.ZERO, new BigDecimal("0.13")),
                 new Installment(30, new BigDecimal("0.13"), new BigDecimal("0.13"), BigDecimal.ZERO, BigDecimal.ZERO)
         );
 
-        assertInstallmentsMatchExpected(
-                actualInstallments.subList(27, 30),
-                expectedFirstInstallments
-        );
+        return Stream.of(Arguments.of(loanRequest, expectedInstallments));
     }
 
 
-    private void assertInstallmentsMatchExpected(List<Installment> actual, List<Installment> expected) {
+    private static void assertInstallmentsMatchExpected(List<Installment> actual, List<Installment> expected) {
         assertThat(actual).hasSize(expected.size());
 
-        for (int i = 0; i < expected.size(); i++) {
+        for (int i = expected.size() - 1; i >= 0; i--) {
             Installment expectedInst = expected.get(i);
             Installment actualInst = actual.get(i);
             assertThat(actualInst.getMonth()).isEqualTo(expectedInst.getMonth());
