@@ -1,0 +1,239 @@
+[
+  {
+    "loanAmount": "1200",
+    "interestRate": "0",
+    "loanTerm": 3,
+    "installments": [
+      {
+        "month": 1,
+        "paymentAmount": "400.00",
+        "principalAmount": "400.00",
+        "interestAmount": "0",
+        "balanceOwed": "800.00"
+      },
+      {
+        "month": 2,
+        "paymentAmount": "400.00",
+        "principalAmount": "400.00",
+        "interestAmount": "0",
+        "balanceOwed": "400.00"
+      },
+      {
+        "month": 3,
+        "paymentAmount": "400.00",
+        "principalAmount": "400.00",
+        "interestAmount": "0",
+        "balanceOwed": "0"
+      }
+    ],
+    "name": "zeroInterestRate"
+  },
+  {
+    "loanAmount": "500",
+    "interestRate": "12",
+    "loanTerm": 1,
+    "installments": [
+      {
+        "month": 1,
+        "paymentAmount": "505",
+        "principalAmount": "500",
+        "interestAmount": "5",
+        "balanceOwed": "0"
+      }
+    ],
+    "name": "singleMonthLoan"
+  },
+  {
+    "loanAmount": "10000",
+    "interestRate": "7",
+    "loanTerm": 12,
+    "installments": [
+      {
+        "month": 1,
+        "paymentAmount": "865.27",
+        "principalAmount": "806.94",
+        "interestAmount": "58.33",
+        "balanceOwed": "9193.06"
+      },
+      {
+        "month": 2,
+        "paymentAmount": "865.27",
+        "principalAmount": "811.64",
+        "interestAmount": "53.63",
+        "balanceOwed": "8381.42"
+      },
+      {
+        "month": 3,
+        "paymentAmount": "865.27",
+        "principalAmount": "816.38",
+        "interestAmount": "48.89",
+        "balanceOwed": "7565.04"
+      },
+      {
+        "month": 4,
+        "paymentAmount": "865.27",
+        "principalAmount": "821.14",
+        "interestAmount": "44.13",
+        "balanceOwed": "6743.90"
+      },
+      {
+        "month": 5,
+        "paymentAmount": "865.27",
+        "principalAmount": "825.93",
+        "interestAmount": "39.34",
+        "balanceOwed": "5917.97"
+      },
+      {
+        "month": 6,
+        "paymentAmount": "865.27",
+        "principalAmount": "830.75",
+        "interestAmount": "34.52",
+        "balanceOwed": "5087.22"
+      },
+      {
+        "month": 7,
+        "paymentAmount": "865.27",
+        "principalAmount": "835.59",
+        "interestAmount": "29.68",
+        "balanceOwed": "4251.63"
+      },
+      {
+        "month": 8,
+        "paymentAmount": "865.27",
+        "principalAmount": "840.47",
+        "interestAmount": "24.80",
+        "balanceOwed": "3411.16"
+      },
+      {
+        "month": 9,
+        "paymentAmount": "865.27",
+        "principalAmount": "845.37",
+        "interestAmount": "19.90",
+        "balanceOwed": "2565.79"
+      },
+      {
+        "month": 10,
+        "paymentAmount": "865.27",
+        "principalAmount": "850.30",
+        "interestAmount": "14.97",
+        "balanceOwed": "1715.49"
+      },
+      {
+        "month": 11,
+        "paymentAmount": "865.27",
+        "principalAmount": "855.26",
+        "interestAmount": "10.01",
+        "balanceOwed": "860.23"
+      },
+      {
+        "month": 12,
+        "paymentAmount": "865.25",
+        "principalAmount": "860.23",
+        "interestAmount": "5.02",
+        "balanceOwed": "0"
+      }
+    ],
+    "name": "lastPaymentAdjusted"
+  },
+  {
+    "loanAmount": "99000000",
+    "interestRate": "35.8",
+    "loanTerm": 360,
+    "installments": [
+      {
+        "month": 358,
+        "paymentAmount": "2953574.86",
+        "principalAmount": "2704238.93",
+        "interestAmount": "249335.93",
+        "balanceOwed": "5653389.92"
+      },
+      {
+        "month": 359,
+        "paymentAmount": "2953574.86",
+        "principalAmount": "2784915.39",
+        "interestAmount": "168659.47",
+        "balanceOwed": "2868474.53"
+      },
+      {
+        "month": 360,
+        "paymentAmount": "2954050.69",
+        "principalAmount": "2868474.53",
+        "interestAmount": "85576.16",
+        "balanceOwed": "0"
+      }
+    ],
+    "name": "longTermLoan"
+  },
+  {
+    "loanAmount": "900000000",
+    "interestRate": "35.8",
+    "loanTerm": 5,
+    "installments": [
+      {
+        "month": 1,
+        "paymentAmount": "196425605.36",
+        "principalAmount": "169575605.36",
+        "interestAmount": "26850000",
+        "balanceOwed": "730424394.64"
+      },
+      {
+        "month": 2,
+        "paymentAmount": "196425605.36",
+        "principalAmount": "174634610.92",
+        "interestAmount": "21790994.44",
+        "balanceOwed": "555789783.72"
+      },
+      {
+        "month": 3,
+        "paymentAmount": "196425605.36",
+        "principalAmount": "179844543.48",
+        "interestAmount": "16581061.88",
+        "balanceOwed": "375945240.24"
+      },
+      {
+        "month": 4,
+        "paymentAmount": "196425605.36",
+        "principalAmount": "185209905.69",
+        "interestAmount": "11215699.67",
+        "balanceOwed": "190735334.55"
+      },
+      {
+        "month": 5,
+        "paymentAmount": "196425605.36",
+        "principalAmount": "190735334.55",
+        "interestAmount": "5690270.81",
+        "balanceOwed": "0"
+      }
+    ],
+    "name": "bigLoanAmount"
+  },
+  {
+    "loanAmount": "1",
+    "interestRate": "0.01",
+    "loanTerm": 30,
+    "installments": [
+      {
+        "month": 28,
+        "paymentAmount": "0.03",
+        "principalAmount": "0.03",
+        "interestAmount": "0",
+        "balanceOwed": "0.16"
+      },
+      {
+        "month": 29,
+        "paymentAmount": "0.03",
+        "principalAmount": "0.03",
+        "interestAmount": "0",
+        "balanceOwed": "0.13"
+      },
+      {
+        "month": 30,
+        "paymentAmount": "0.13",
+        "principalAmount": "0.13",
+        "interestAmount": "0",
+        "balanceOwed": "0"
+      }
+    ],
+    "name": "tinyLoanAmount"
+  }
+]
